@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<meta name="description" content="">
+<link rel="icon" type="image/svg+xml" href="files/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Uses the same theme as index.html so every page stays visually
+     consistent. If you change the theme link in index.html, change it
+     here too. -->
+<link rel="stylesheet" href="themes/theme-swiss.css">
+<!-- Lab name/abbreviation/contact email live in files/site-config.js,
+     shared by every page — see that file to change them site-wide. -->
+<script src="files/site-config.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html"><span data-site="brand-abbr"></span><span data-site="brand-tagline"></span></a>
+    <div class="nav-links">
+      <a href="index.html#research">Research</a>
+      <a href="projects.html">Projects</a>
+      <a href="publications.html">Publications</a>
+      <a href="teaching.html">Teaching</a>
+      <a href="team.html">Team</a>
+      <a href="news.html">News</a>
+      <a href="index.html#join">Join</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="overline" data-site="overline"></span>
+    <h1>Team</h1>
+    <p class="hero-sub">
+      The people behind <span data-site="brand-abbr"></span>. <a href="index.html">&larr; Back to the lab homepage</a>
+    </p>
+  </div>
+</header>
+
+<section id="team">
+  <div class="wrap">
+    <div class="prof">
+      <div class="prof-photo">K</div>
+      <div>
+        <h3>Kyoungmin Kim</h3>
+        <div class="role">Assistant Professor, School of Computing, KAIST</div>
+        <div class="bio">
+          <ul class="bio-history">
+            <li>2017.03–2023.08: PhD, POSTECH</li>
+            <li>2023.09–2024.02: Postdoc, POSTECH</li>
+            <li>2024.03–2026.08: Postdoc, EPFL</li>
+            <li>2026.08–present: Assistant Professor, School of Computing, KAIST</li>
+          </ul>
+          <p class="bio-contact">Contact: <a href="mailto:kyoung-min.kim@epfl.ch">kyoung-min.kim@epfl.ch</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="recruit-line">
+      <span data-site="brand-abbr"></span> opened in <span data-site="site-year"></span> and is building its founding cohort of students.
+      The first members of a lab shape everything that follows — see <a href="index.html#join">how to join</a>.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <span class="brand" data-site="footer-abbr"></span>
+    <span data-site="footer-tagline"></span>
+    <span data-site="footer-copyright"></span>
+  </div>
+</footer>
+
+<script>
+/* ==========================================================
+   BRANDING
+   ========================================================== */
+document.title = `Team — ${SITE.ABBR}, ${SITE.INSTITUTION}`;
+document.querySelector('meta[name="description"]').setAttribute("content",
+  `Team of the ${SITE.ABBR} (${SITE.NAME}), ${SITE.SCHOOL}, ${SITE.INSTITUTION}.`);
+applySiteBrand();
+</script>
+</body>
+</html>

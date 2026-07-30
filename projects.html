@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<meta name="description" content="">
+<link rel="icon" type="image/svg+xml" href="files/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Uses the same theme as index.html so every page stays visually
+     consistent. If you change the theme link in index.html, change it
+     here too. -->
+<link rel="stylesheet" href="themes/theme-swiss.css">
+<!-- Lab name/abbreviation/contact email live in files/site-config.js,
+     shared by every page — see that file to change them site-wide. -->
+<script src="files/site-config.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html"><span data-site="brand-abbr"></span><span data-site="brand-tagline"></span></a>
+    <div class="nav-links">
+      <a href="index.html#research">Research</a>
+      <a href="projects.html">Projects</a>
+      <a href="publications.html">Publications</a>
+      <a href="teaching.html">Teaching</a>
+      <a href="team.html">Team</a>
+      <a href="news.html">News</a>
+      <a href="index.html#join">Join</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="overline" data-site="overline"></span>
+    <h1>Projects</h1>
+    <p class="hero-sub">
+      Ongoing &amp; open projects at <span data-site="brand-abbr"></span>. <a href="index.html">&larr; Back to the lab homepage</a>
+    </p>
+  </div>
+</header>
+
+<section id="all-projects">
+  <div class="wrap">
+    <div id="proj-list"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <span class="brand" data-site="footer-abbr"></span>
+    <span data-site="footer-tagline"></span>
+    <span data-site="footer-copyright"></span>
+  </div>
+</footer>
+
+<script>
+/* ==========================================================
+   BRANDING
+   ========================================================== */
+document.title = `Projects — ${SITE.ABBR}, ${SITE.INSTITUTION}`;
+document.querySelector('meta[name="description"]').setAttribute("content",
+  `Ongoing and open projects at the ${SITE.ABBR} (${SITE.NAME}), ${SITE.SCHOOL}, ${SITE.INSTITUTION}.`);
+applySiteBrand();
+</script>
+<script>
+/* ==========================================================
+   DATA
+   ----------------------------------------------------------
+   Projects live ENTIRELY in files/projects.csv — no project data is
+   duplicated here. This page only fetches and renders that CSV.
+   Columns: title | status | area | motivation | goal | timeline
+     - status: Ongoing or Open
+     - leave any of motivation/goal/timeline EMPTY and the site shows
+       "discuss with the professor" instead.
+   Requires the site to be served over HTTP (Live Server / GitHub
+   Pages) — opening this page directly via file:// cannot fetch local
+   files, so projects won't load that way; see the error message below.
+   ========================================================== */
+const PROJECTS_SHEET_URL = "files/projects.csv";
+const ASK_PROFESSOR = "Not public yet &mdash; discuss with the professor.";
+
+function parseCSV(text) {
+  const rows = []; let row = [], cur = "", inQ = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (inQ) {
+      if (c === '"') { if (text[i+1] === '"') { cur += '"'; i++; } else inQ = false; }
+      else cur += c;
+    } else if (c === '"') inQ = true;
+    else if (c === ",") { row.push(cur); cur = ""; }
+    else if (c === "\n" || c === "\r") {
+      if (cur !== "" || row.length) { row.push(cur); rows.push(row); row = []; cur = ""; }
+    } else cur += c;
+  }
+  if (cur !== "" || row.length) { row.push(cur); rows.push(row); }
+  return rows;
+}
+
+function fieldHTML(label, value) {
+  const v = (value || "").trim();
+  return `<div class="p-field"><h5>${label}</h5>` +
+    (v ? `<p>${v}</p>` : `<p class="ask">${ASK_PROFESSOR}</p>`) + `</div>`;
+}
+
+function renderProjects(list) {
+  document.getElementById("proj-list").innerHTML = list.map((p, i) => `
+    <div class="acc" id="proj-${i}">
+      <button class="acc-head" aria-expanded="false">
+        <span class="badge ${(p.status || "").toLowerCase() === "open" ? "b-open" : "b-ongoing"}">${p.status || "Ongoing"}</span>
+        <span class="acc-title">${p.title}</span>
+        ${p.area ? `<span class="acc-meta">${p.area}</span>` : ""}
+        <span class="chev">+</span>
+      </button>
+      <div class="acc-body">
+        ${fieldHTML("Motivation", p.motivation)}
+        ${fieldHTML("Goal", p.goal)}
+        ${fieldHTML("Timeline", p.timeline)}
+        <p class="p-note">Interested? <a href="mailto:${SITE.CONTACT_EMAIL}?subject=[${SITE.ABBR}] ${encodeURIComponent(p.status || "Project")}: ${encodeURIComponent(p.title)}">Email the professor</a> with a short note on why this topic.</p>
+      </div>
+    </div>`).join("");
+}
+
+document.addEventListener("click", e => {
+  const head = e.target.closest(".acc-head");
+  if (!head) return;
+  const acc = head.parentElement;
+  const on = acc.classList.toggle("on");
+  head.setAttribute("aria-expanded", on);
+});
+
+async function loadSheetGeneric(url, apply) {
+  if (!url) return false;
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return false;
+    const rows = parseCSV(await res.text());
+    const head = rows[0].map(h => h.trim().toLowerCase());
+    const items = rows.slice(1).filter(r => r.some(c => (c || "").trim()))
+      .map(r => Object.fromEntries(head.map((h, j) => [h, r[j] || ""])));
+    if (items.length) { apply(items); return true; }
+    return false;
+  } catch (e) { return false; }
+}
+
+document.getElementById("proj-list").innerHTML = `<p class="tp-empty">Loading projects…</p>`;
+loadSheetGeneric(PROJECTS_SHEET_URL, renderProjects).then(ok => {
+  if (!ok) document.getElementById("proj-list").innerHTML =
+    `<p class="tp-empty">Could not load files/projects.csv — this page needs to be served over HTTP (Live Server, GitHub Pages, etc.), not opened directly as a file.</p>`;
+});
+</script>
+</body>
+</html>

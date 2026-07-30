@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<meta name="description" content="">
+<link rel="icon" type="image/svg+xml" href="files/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Uses the same theme as index.html so every page stays visually
+     consistent. If you change the theme link in index.html, change it
+     here too. -->
+<link rel="stylesheet" href="themes/theme-swiss.css">
+<!-- Lab name/abbreviation/contact email live in files/site-config.js,
+     shared by every page — see that file to change them site-wide. -->
+<script src="files/site-config.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html"><span data-site="brand-abbr"></span><span data-site="brand-tagline"></span></a>
+    <div class="nav-links">
+      <a href="index.html#research">Research</a>
+      <a href="projects.html">Projects</a>
+      <a href="publications.html">Publications</a>
+      <a href="teaching.html">Teaching</a>
+      <a href="team.html">Team</a>
+      <a href="news.html">News</a>
+      <a href="index.html#join">Join</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="overline" data-site="overline"></span>
+    <h1>News</h1>
+    <p class="hero-sub">
+      Announcements from <span data-site="brand-abbr"></span>. <a href="index.html">&larr; Back to the lab homepage</a>
+    </p>
+  </div>
+</header>
+
+<section id="all-news">
+  <div class="wrap">
+    <div id="news-list"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <span class="brand" data-site="footer-abbr"></span>
+    <span data-site="footer-tagline"></span>
+    <span data-site="footer-copyright"></span>
+  </div>
+</footer>
+
+<script>
+/* ==========================================================
+   BRANDING
+   ========================================================== */
+document.title = `News — ${SITE.ABBR}, ${SITE.INSTITUTION}`;
+document.querySelector('meta[name="description"]').setAttribute("content",
+  `News from the ${SITE.ABBR} (${SITE.NAME}), ${SITE.SCHOOL}, ${SITE.INSTITUTION}.`);
+applySiteBrand();
+</script>
+<script>
+/* ==========================================================
+   DATA
+   ----------------------------------------------------------
+   News lives ENTIRELY in files/news.csv — no news data is
+   duplicated here (the homepage's "latest news" widget reads the
+   same file). Columns: date | text
+   Requires the site to be served over HTTP (Live Server / GitHub
+   Pages / any static host) — NOT when this page is opened directly
+   via file://, since browsers block that fetch.
+   ========================================================== */
+const NEWS_SHEET_URL = "files/news.csv";
+
+function parseCSV(text) {
+  const rows = []; let row = [], cur = "", inQ = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (inQ) {
+      if (c === '"') { if (text[i+1] === '"') { cur += '"'; i++; } else inQ = false; }
+      else cur += c;
+    } else if (c === '"') inQ = true;
+    else if (c === ",") { row.push(cur); cur = ""; }
+    else if (c === "\n" || c === "\r") {
+      if (cur !== "" || row.length) { row.push(cur); rows.push(row); row = []; cur = ""; }
+    } else cur += c;
+  }
+  if (cur !== "" || row.length) { row.push(cur); rows.push(row); }
+  return rows;
+}
+
+function newsHTML(n) {
+  return `<div class="news-item"><span class="news-date">${n.date}</span><p>${n.text}</p></div>`;
+}
+
+async function loadNews() {
+  const el = document.getElementById("news-list");
+  if (!NEWS_SHEET_URL) return false;
+  try {
+    const res = await fetch(NEWS_SHEET_URL);
+    if (!res.ok) return false;
+    const rows = parseCSV(await res.text());
+    const head = rows[0].map(h => h.trim().toLowerCase());
+    const idx = k => head.indexOf(k);
+    const items = rows.slice(1).filter(r => r[idx("date")])
+      .map(r => ({ date: r[idx("date")], text: r[idx("text")] }));
+    if (items.length) { el.innerHTML = items.map(newsHTML).join(""); return true; }
+    return false;
+  } catch (e) { return false; }
+}
+
+document.getElementById("news-list").innerHTML = `<p class="tp-empty">Loading news…</p>`;
+loadNews().then(ok => {
+  if (!ok) document.getElementById("news-list").innerHTML =
+    `<p class="tp-empty">Could not load files/news.csv — this page needs to be served over HTTP (Live Server, GitHub Pages, etc.), not opened directly as a file.</p>`;
+});
+</script>
+</body>
+</html>

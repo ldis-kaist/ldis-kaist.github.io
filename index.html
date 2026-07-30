@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>
+  /* Refreshing the page used to jump back down to whatever section (e.g. #teaching)
+     was last clicked, because the URL still carries that hash and browsers
+     auto-scroll to a matching id on load. Strip the hash immediately, before
+     that native scroll happens, so a reload always starts at the top.
+     Clicking a nav link (#research, #join, ...) still scrolls normally —
+     this only runs once, on an actual page load/refresh. */
+  if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<meta name="description" content="">
+<link rel="icon" type="image/svg+xml" href="files/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- ==========================================================
+     THEME: to switch styles, change the href below to any file
+     in themes/ (theme-swiss.css, theme-sage.css, theme-moss.css,
+     theme-mint.css, theme-graphite.css, theme-warm.css,
+     theme-academic.css). Nothing else changes.
+     ========================================================== -->
+<link rel="stylesheet" href="themes/theme-swiss.css">
+<!-- Lab name/abbreviation/contact email live in files/site-config.js,
+     shared by every page — see that file to change them site-wide. -->
+<script src="files/site-config.js"></script>
+<!-- Which of the 4 Research lenses (Domain/System layer/Methodology/
+     Heterogeneity) each topic belongs to — shared with publications.html
+     so paper tags render grouped by lens there too. -->
+<script src="files/topics.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="brand" href="#"><span data-site="brand-abbr"></span><span data-site="brand-tagline"></span></a>
+    <div class="nav-links">
+      <a href="#research">Research</a>
+      <a href="projects.html">Projects</a>
+      <a href="publications.html">Publications</a>
+      <a href="teaching.html">Teaching</a>
+      <a href="team.html">Team</a>
+      <a href="news.html">News</a>
+      <a href="#join">Join</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ==========================================================
+     HOME LAYOUT
+     ----------------------------------------------------------
+     Two columns, like https://dsail.kaist.ac.kr/: the lab intro +
+     Research explorer + Join CTA on the left, a short "latest news"
+     widget on the right (sticky while scrolling). Team, the full News
+     history, Projects, and Teaching each live on their own page now —
+     linked from the nav above only, not shown here.
+     ========================================================== -->
+<div class="home-grid">
+  <main class="home-main">
+
+    <div class="home-hero">
+      <span class="overline" data-site="overline"></span>
+      <h1>We build data systems that <em>learn</em>.</h1>
+      <p class="hero-sub">
+        <span data-site="hero-lab-name"></span> builds data systems for the AI era —
+        towards systems that are <strong>principled</strong>, grounded in theory and quantifying how far we can improve or go wrong;
+        <strong>adaptive</strong>, learning from execution rather than predetermining everything;
+        and <strong>declarative</strong>, so users say <em>what</em> they want, not <em>how</em> to get it.
+        As a long-term goal, we aim to <strong>build a reliable AI-driven research assistant</strong> for reducing obvious/manual tasks so we can focus on genuinely interesting problems.
+      </p>
+      <p class="hero-note">We are recruiting graduate students and undergraduate interns. <a href="#join">Learn more</a></p>
+    </div>
+
+    <section id="research">
+      <div class="sec-head">
+        <span class="kicker">Research</span>
+        <h2>Four lenses into data systems</h2>
+        <p class="sec-intro">
+          Our work can be viewed by <em>domain</em>, by <em>system layer</em>, by <em>methodology</em>,
+          or by the <em>dimensions of heterogeneity</em> we tackle.
+          Click any item to see what it means and the papers behind it.
+        </p>
+      </div>
+
+      <div class="view-tabs" role="tablist">
+        <button class="on" data-view="domains">Domains</button>
+        <button data-view="layers">System layers</button>
+        <button data-view="directions">Methodology</button>
+        <button data-view="axes">Heterogeneity</button>
+      </div>
+
+      <!-- view 1: domains (disjoint) -->
+      <div class="view on" id="view-domains">
+        <div class="domain-row">
+          <div class="domain" data-topic="Pure DB">
+            <h3>Pure DB</h3>
+            <p>Core database technology (mainly OLAP): adaptive/declarative query processing, hardware-aware query processing, physical operator design, and query optimization.</p>
+          </div>
+          <div class="domain" data-topic="AI4DB">
+            <h3>AI4DB</h3>
+            <p>AI inside the database, learned components that replace heuristics and manual labor inside data systems: query optimization and NL-to-SQL translation.</p>
+          </div>
+          <div class="domain" data-topic="DB4AI">
+            <h3>DB4AI</h3>
+            <p>Data systems for AI, the infrastructure AI workloads run on: LLM inference serving, vector query processing, semantic operators and engines over unstructured data, and datalakes.</p>
+          </div>
+        </div>
+        <p class="view-caption">Three domains covering the DB–AI landscape.</p>
+      </div>
+
+      <!-- view 2: layers (stacked) -->
+      <div class="view" id="view-layers">
+        <div class="layer-stack">
+          <div class="layer" data-topic="Query Interface">
+            <span class="lnum">L4</span><h3>Query Interface</h3><span class="lhint">how you ask</span>
+          </div>
+          <div class="layer" data-topic="Query Optimization">
+            <span class="lnum">L3</span><h3>Query Optimization</h3><span class="lhint">how it plans</span>
+          </div>
+          <div class="layer" data-topic="Query Processing">
+            <span class="lnum">L2</span><h3>Query Processing</h3><span class="lhint">how it runs over data</span>
+          </div>
+          <div class="layer" data-topic="Data Maintenance">
+            <span class="lnum">L1</span><h3>Data Maintenance</h3><span class="lhint">how data lives</span>
+          </div>
+        </div>
+        <p class="view-caption">The stack of a data system, top to bottom.</p>
+      </div>
+
+      <!-- view 3: methodology (venn) -->
+      <div class="view" id="view-directions">
+        <div class="diagram-box">
+          <svg viewBox="0 0 640 430" aria-label="Venn diagram of methodologies" id="venn-svg">
+            <defs id="venn-clip-defs"></defs>
+            <g class="venn-g" data-topic="System">
+              <circle class="venn-circle" cx="255" cy="165" r="118"/>
+              <text class="venn-label" x="180" y="105" text-anchor="middle">System</text>
+            </g>
+            <g class="venn-g" data-topic="Algorithm">
+              <circle class="venn-circle" cx="385" cy="165" r="118"/>
+              <text class="venn-label" x="465" y="105" text-anchor="middle">Algorithm</text>
+            </g>
+            <g class="venn-g" data-topic="Theory">
+              <circle class="venn-circle" cx="255" cy="265" r="118"/>
+              <text class="venn-label" x="172" y="345" text-anchor="middle">Theory</text>
+            </g>
+            <g class="venn-g" data-topic="AI">
+              <circle class="venn-circle" cx="385" cy="265" r="118"/>
+              <text class="venn-label" x="472" y="345" text-anchor="middle">AI</text>
+            </g>
+            <rect id="venn-highlight" class="venn-highlight" x="0" y="0" width="640" height="430" style="display:none"/>
+          </svg>
+        </div>
+        <p class="view-caption">Our methodologies overlap — the interesting problems live in the intersections.</p>
+      </div>
+
+      <!-- view 4: heterogeneity (3 axes) -->
+      <div class="view" id="view-axes">
+        <div class="diagram-box">
+          <svg viewBox="0 0 640 430" aria-label="Three axes of heterogeneity">
+            <defs>
+              <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 1 L 8 5 L 0 9" fill="none" stroke="currentColor" stroke-width="1.4"/>
+              </marker>
+            </defs>
+            <!-- origin -->
+            <circle cx="320" cy="220" r="3.5" fill="var(--ink)"/>
+            <g class="axis-g" data-topic="Heterogeneous Workload" style="color: var(--ink-soft)">
+              <line class="axis-hit" x1="320" y1="220" x2="320" y2="58"/>
+              <line class="axis-line" x1="320" y1="220" x2="320" y2="58" marker-end="url(#arrow)"/>
+              <text class="axis-label" x="320" y="38" text-anchor="middle">Workload</text>
+              <text class="axis-sub" x="320" y="405" text-anchor="middle" opacity="0"> </text>
+            </g>
+            <g class="axis-g" data-topic="Heterogeneous Data" style="color: var(--ink-soft)">
+              <line class="axis-hit" x1="320" y1="220" x2="152" y2="330"/>
+              <line class="axis-line" x1="320" y1="220" x2="152" y2="330" marker-end="url(#arrow)"/>
+              <text class="axis-label" x="118" y="362" text-anchor="middle">Data</text>
+            </g>
+            <g class="axis-g" data-topic="Heterogeneous Hardware" style="color: var(--ink-soft)">
+              <line class="axis-hit" x1="320" y1="220" x2="488" y2="330"/>
+              <line class="axis-line" x1="320" y1="220" x2="488" y2="330" marker-end="url(#arrow)"/>
+              <text class="axis-label" x="522" y="362" text-anchor="middle">Hardware</text>
+            </g>
+
+            <!-- clickable subtype points scattered around each axis — the
+                 actual unit papers are tagged with (see files/topics.js:
+                 HETEROGENEITY_SUBTYPES). Clicking a point shows only its
+                 own related papers; clicking an axis line above shows
+                 just the axis-level description. Point radius starts at
+                 the base value below and is scaled up by paper count via
+                 updateAxisPointSizes() once files/publications.csv loads. -->
+            <g class="axis-point" data-topic="Single Operator"><circle cx="328.4" cy="172.1" r="3.5"/><text x="338" y="175.1" text-anchor="start">Single operator</text></g>
+            <g class="axis-point" data-topic="Analytics Query"><circle cx="301.6" cy="146.1" r="3.5"/><text x="311.2" y="149.1" text-anchor="start">Analytics query</text></g>
+            <g class="axis-point" data-topic="Approximate Query"><circle cx="341.2" cy="120.2" r="3.5"/><text x="350.8" y="123.2" text-anchor="start">Approximate query</text></g>
+            <g class="axis-point" data-topic="Recursive Query"><circle cx="297.8" cy="94" r="3.5"/><text x="307.4" y="97" text-anchor="start">Recursive query</text></g>
+            <g class="axis-point" data-topic="Continuous Query"><circle cx="356.8" cy="72.2" r="3.5"/><text x="366.4" y="75.2" text-anchor="start">Continuous query</text></g>
+
+            <g class="axis-point" data-topic="Relation"><circle cx="250.9" cy="241.4" r="3.5"/><text x="240.9" y="255.4" text-anchor="end">Relation</text></g>
+            <g class="axis-point" data-topic="Graph"><circle cx="263.5" cy="307.8" r="3.5"/><text x="253.5" y="321.8" text-anchor="end">Graph</text></g>
+            <g class="axis-point" data-topic="Vector"><circle cx="191.1" cy="264.9" r="3.5"/><text x="181.1" y="278.9" text-anchor="end">Vector</text></g>
+            <g class="axis-point" data-topic="Model"><circle cx="230.6" cy="348.6" r="3.5"/><text x="220.6" y="337.6" text-anchor="end">Model</text></g>
+
+            <g class="axis-point" data-topic="CPU"><circle cx="389.1" cy="241.4" r="3.5"/><text x="399.1" y="255.4" text-anchor="start">CPU</text></g>
+            <g class="axis-point" data-topic="DRAM"><circle cx="376.5" cy="307.8" r="3.5"/><text x="386.5" y="321.8" text-anchor="start">DRAM</text></g>
+            <g class="axis-point" data-topic="GPU"><circle cx="448.9" cy="264.9" r="3.5"/><text x="458.9" y="278.9" text-anchor="start">GPU</text></g>
+            <g class="axis-point" data-topic="Distributed"><circle cx="409.4" cy="348.6" r="3.5"/><text x="419.4" y="337.6" text-anchor="start">Distributed</text></g>
+          </svg>
+        </div>
+        <p class="view-caption">Click a line for the overview, or a point for its papers.</p>
+      </div>
+
+      <!-- detail panel -->
+      <div class="topic-detail" id="topic-detail" hidden>
+        <span class="t-tag" id="td-tag"></span>
+        <h3 id="td-title"></h3>
+        <p id="td-desc"></p>
+        <div class="topic-examples" id="td-examples"></div>
+        <p class="tp-empty" id="td-axis-hint" hidden>Click a point above (e.g. Relation, GPU) to see the papers that use it.</p>
+        <div class="topic-papers" id="td-papers-section">
+          <h4>Related papers</h4>
+          <div id="td-papers"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="join">
+      <div class="sec-head">
+        <span class="kicker">Join</span>
+        <h2>Working with us</h2>
+      </div>
+      <p>
+        We look for students who are curious about <strong>how data systems actually work</strong> —
+        and restless about how they should work in the AI era. Graduates, and undergraduate interns who want 3-6 months of research experience are also welcome.
+        A strong background in any one of
+        systems, algorithms, theory, mathematics, or machine learning is a great starting point.
+      </p>
+      <p>
+        As an early member of a new lab you will work directly with the professor,
+        own your research agenda, and aim for top database venues such as SIGMOD, VLDB, and ICDE.
+      </p>
+      <p>
+        If interested, please send an email with your CV, transcript, and a short note
+        on what you would like to work on.
+      </p>
+      <div class="join-cta">
+        <a data-site="join-email" href="#">Email us</a>
+      </div>
+    </section>
+
+  </main>
+
+  <aside class="home-sidebar">
+    <div class="news-card">
+      <h3>News</h3>
+      <div id="news-sidebar-list"></div>
+      <a class="news-view-all" href="news.html">View all news &rarr;</a>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="wrap foot">
+    <span class="brand" data-site="footer-abbr"></span>
+    <span data-site="footer-tagline"></span>
+    <span data-site="footer-copyright"></span>
+  </div>
+</footer>
+
+<script>
+/* ==========================================================
+   BRANDING
+   ----------------------------------------------------------
+   Fills in every [data-site] element above from files/site-config.js
+   (loaded in <head>), and builds this page's title/meta description
+   from the same fields — so the lab's abbreviation, full name, and
+   contact email are typed out in exactly one place on the whole site.
+   ========================================================== */
+document.title = `${SITE.ABBR} — ${SITE.NAME}, ${SITE.INSTITUTION}`;
+document.querySelector('meta[name="description"]').setAttribute("content",
+  `${SITE.ABBR} is a research group in the ${SITE.SCHOOL} at ${SITE.INSTITUTION}, working on data systems and AI.`);
+applySiteBrand();
+</script>
+<script>
+/* ==========================================================
+   DATA
+   ----------------------------------------------------------
+   Publications live ENTIRELY in files/publications.csv (same file
+   publications.html reads) — no publication data is duplicated here.
+   Columns: title | authors | conference | year | tags | highlight | pdf | code
+     - tags: semicolon-separated, using the exact topic names below
+     - highlight: leave empty for a normal entry, or a short note
+       (e.g. "Selected") to show a badge next to the title
+   This page only uses `papers` to feed the Research "related papers"
+   panel (click a topic to see its papers) — full publication listing
+   lives on publications.html. Requires the site to be served over
+   HTTP; see the error handling near loadSheet() below.
+   ========================================================== */
+const PUBS_SHEET_URL = "files/publications.csv";
+
+const TOPICS = {
+  "Pure DB": { group: TOPIC_GROUPS["Pure DB"], desc: `
+    Classical database problems are far from solved as the queries get larger and more complex (100's of tables),
+    data also becomes larger and more diverse (TBs), as well as hardware devices and configurations
+    (serverless, compute-storage disaggregation, memory-centric systems, XPUs). We design core
+    techniques for query processing, optimization, and data management that are provably
+    correct, practically fast, and robust even on extreme workloads. `
+  },
+  "AI4DB": { group: TOPIC_GROUPS["AI4DB"], desc: `
+    Database internals are full of hand-tuned heuristics (cost models, cardinality estimates,
+    query optimization, index selection, knob tuning) and manual labor (SQL query writing,
+    schema design, benchmarking). AI4DB replaces or augments these with learned components that
+    adapt to the workload — while keeping the robustness and predictability a real system
+    demands. `
+  },
+  "DB4AI": { group: TOPIC_GROUPS["DB4AI"], desc: `
+    Modern AI is bottlenecked by data infrastructure. DB4AI builds the systems that AI runs on:
+    retrieval and vector search engines, LLM inference engines, and query processing over
+    multimodal data using semantic operators — making AI faster, cheaper, and more reliable. `
+  },
+  "Query Interface": { group: TOPIC_GROUPS["Query Interface"], desc: `
+    The topmost layer: how users and applications express what they want. We study interfaces
+    beyond SQL — natural-language querying, APIs for AI agents that access data, and the problem
+    of translating ambiguous human intent into precise, verifiable queries. `
+  },
+  "Query Optimization": { group: TOPIC_GROUPS["Query Optimization"], desc: `
+    Given a query, the system must choose among astronomically many execution plans. We work on
+    cardinality estimation, cost modeling, and plan search — including learned optimizers,
+    theoretical guarantees, and adaptive optimizers that stay robust by correcting their estimates on-the-fly. `
+  },
+  "Query Processing": { group: TOPIC_GROUPS["Query Processing"], desc: `
+    Where the plan meets the machine. We design execution engines and physical operators that exploit
+    modern hardware — parallelism, vectorized execution, GPU acceleration — and approximate
+    processing techniques that trade a little accuracy for a lot of speed, with guarantees. `
+  },
+  "Data Maintenance": { group: TOPIC_GROUPS["Data Maintenance"], desc: `
+    The foundation: keeping data correct, fresh, and well-organized over time. This includes
+    storage, open format, indexing, and efficient data updates — the work that determines whether everything above it can be
+    trusted. `
+  },
+  "System": { group: TOPIC_GROUPS["System"], desc: `
+    We build real systems and measure them honestly, more than ideas that only work on paper;
+    a technique earns its place by improving end-to-end performance in a working prototype under
+    realistic workloads. `
+  },
+  "Algorithm": { group: TOPIC_GROUPS["Algorithm"], desc: `
+    At the heart of every fast system is a good algorithm. We design algorithms for data-intensive problems such as joins, sampling, sketching, search that improve both asymptotic
+    complexity and real-world constants. `
+  },
+  "Theory": { group: TOPIC_GROUPS["Theory"], desc: `
+    We care about why things work. That means formal guarantees such as worst-case optimality,
+    approximation bounds, and a principled understanding of when learned components can be
+    trusted and when they cannot. We measure performance upper bounds (how far we can improve) as a guideline. `
+  },
+  "AI": { group: TOPIC_GROUPS["AI"], desc: `
+    AI appears twice in our work: as a tool inside systems (learned components that replace
+    heuristics) and as a workload that systems must serve (training, retrieval, inference). We
+    study both directions and the loop between them. `
+  },
+  "Heterogeneous Data": { group: TOPIC_GROUPS["Heterogeneous Data"], desc: `
+    Real data is not one table. Relational records, text, graphs, vectors, model weights, activations, and multimodal
+    content increasingly live in the same application — and can be queried together. We design
+    systems that treat this diversity as a first-class concern rather than an afterthought. `
+  },
+  "Heterogeneous Workload": { group: TOPIC_GROUPS["Heterogeneous Workload"], desc: `
+    Analytics, transactions, vector search, inferences, streaming queries, and agentic queries may hit the same system with
+    wildly different patterns — and the mix shifts over time. We build systems that adapt to
+    what the workload actually is, not what the DBA assumed it would be. `
+  },
+  "Heterogeneous Hardware": { group: TOPIC_GROUPS["Heterogeneous Hardware"], desc: `
+    CPUs, GPUs, NVMe, and disaggregated memory each change the rules of system design. We
+    rethink data systems for the hardware they actually run on, instead of the hardware of
+    thirty years ago. `
+  },
+};
+
+/* ==========================================================
+   RENDERING — no need to edit below this line.
+   ========================================================== */
+let papers = [];
+
+function pubHTML(p) {
+  const links = [];
+  if (p.pdf && p.pdf !== "") links.push(`<a href="${p.pdf}">PDF</a>`);
+  if (p.code && p.code !== "") links.push(`<a href="${p.code}">Code</a>`);
+  return `<div class="pub-item">
+    <span class="pub-venue">${p.conference} ${p.year}</span>
+    <div>
+      <div class="pub-title">${p.title}${p.highlight ? ` <span class="pub-highlight">${p.highlight}</span>` : ""}</div>
+      <div class="pub-authors">${p.authors}</div>
+      <div class="pub-meta">${links.join("")}
+        <span class="pub-tags">${pubTagsHTML(p.tags)}</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* topic selection */
+let selectedTopic = null;
+function selectTopic(name, scroll) {
+  if (scroll === undefined) scroll = true;
+  selectedTopic = name;
+  document.querySelectorAll("[data-topic]").forEach(el =>
+    el.classList.toggle("sel", el.dataset.topic === name));
+  const d = document.getElementById("topic-detail");
+  d.hidden = false;
+  const vh = document.getElementById("venn-highlight");
+  if (vh) vh.style.display = "none";
+  document.getElementById("td-examples").innerHTML = "";
+  const papersSection = document.getElementById("td-papers-section");
+  const axisHint = document.getElementById("td-axis-hint");
+
+  // Three cases: (1) a specific heterogeneity subtype clicked directly
+  // as a point in the diagram — e.g. "Relation", "GPU"; (2) one of the
+  // 3 Heterogeneity axis lines themselves — overview only, no papers,
+  // since a paper is tagged with a subtype, never the bare axis name;
+  // (3) any other topic (domain / system layer / methodology) — unchanged.
+  const sub = HETEROGENEITY_SUBTYPES[name];
+  if (sub) {
+    document.getElementById("td-tag").textContent = "Heterogeneity";
+    document.getElementById("td-title").textContent = name;
+    document.getElementById("td-desc").textContent = sub.desc;
+    document.getElementById("td-desc").style.display = "";
+    axisHint.hidden = true;
+    papersSection.hidden = false;
+    const rel = papers.filter(p => (p.tags || []).includes(name));
+    document.getElementById("td-papers").innerHTML = rel.length
+      ? rel.map(pubHTML).join("")
+      : `<p class="tp-empty">Papers on this topic are on the way.</p>`;
+  } else {
+    const t = TOPICS[name];
+    document.getElementById("td-tag").textContent = t.group;
+    document.getElementById("td-title").textContent = name;
+    document.getElementById("td-desc").textContent = t.desc;
+    document.getElementById("td-desc").style.display = "";
+    if (HETEROGENEITY_AXES.includes(name)) {
+      papersSection.hidden = true;
+      axisHint.hidden = false;
+    } else {
+      axisHint.hidden = true;
+      papersSection.hidden = false;
+      const rel = papers.filter(p => (p.tags || []).includes(name));
+      document.getElementById("td-papers").innerHTML = rel.length
+        ? rel.map(pubHTML).join("")
+        : `<p class="tp-empty">Papers on this topic are on the way.</p>`;
+    }
+  }
+  if (scroll) d.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+document.querySelectorAll("[data-topic]:not(.venn-g)").forEach(el =>
+  el.addEventListener("click", () => selectTopic(el.dataset.topic)));
+
+/* venn diagram: precise circle-membership hit-testing so overlapping
+   regions (intersections) can be clicked directly, instead of only the
+   topmost <g> element receiving the click. */
+const VENN_CIRCLES = {
+  System:    { cx: 255, cy: 165, r: 118 },
+  Algorithm: { cx: 385, cy: 165, r: 118 },
+  Theory:    { cx: 255, cy: 265, r: 118 },
+  AI:        { cx: 385, cy: 265, r: 118 },
+};
+const VENN_ORDER = ["System", "Algorithm", "Theory", "AI"];
+
+function vennPointTopics(evt) {
+  const svg = document.getElementById("venn-svg");
+  const pt = svg.createSVGPoint();
+  pt.x = evt.clientX;
+  pt.y = evt.clientY;
+  const loc = pt.matrixTransform(svg.getScreenCTM().inverse());
+  return VENN_ORDER.filter(name => {
+    const c = VENN_CIRCLES[name];
+    return Math.hypot(loc.x - c.cx, loc.y - c.cy) <= c.r;
+  });
+}
+
+function selectIntersection(names) {
+  selectedTopic = null;
+  document.querySelectorAll("[data-topic]").forEach(el =>
+    el.classList.toggle("sel", el.classList.contains("venn-g") && names.includes(el.dataset.topic)));
+
+  const defs = document.getElementById("venn-clip-defs");
+  defs.innerHTML = "";
+  let clipRef = null;
+  names.forEach((name, i) => {
+    const c = VENN_CIRCLES[name];
+    const clipId = "venn-clip-" + i;
+    const clip = document.createElementNS("http://www.w3.org/2000/svg", "clipPath");
+    clip.setAttribute("id", clipId);
+    if (clipRef) clip.setAttribute("clip-path", `url(#${clipRef})`);
+    const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    circle.setAttribute("cx", c.cx);
+    circle.setAttribute("cy", c.cy);
+    circle.setAttribute("r", c.r);
+    clip.appendChild(circle);
+    defs.appendChild(clip);
+    clipRef = clipId;
+  });
+  const rect = document.getElementById("venn-highlight");
+  rect.setAttribute("clip-path", `url(#${clipRef})`);
+  rect.style.display = "";
+
+  const d = document.getElementById("topic-detail");
+  d.hidden = false;
+  document.getElementById("td-tag").textContent = "Methodology";
+  document.getElementById("td-title").textContent = names.join(" + ");
+  const desc = document.getElementById("td-desc");
+  desc.textContent = "";
+  desc.style.display = "none";
+  document.getElementById("td-examples").innerHTML = "";
+  document.getElementById("td-axis-hint").hidden = true;
+  document.getElementById("td-papers-section").hidden = false;
+  const rel = papers.filter(p => names.every(n => (p.tags || []).includes(n)));
+  document.getElementById("td-papers").innerHTML = rel.length
+    ? rel.map(pubHTML).join("")
+    : `<p class="tp-empty">Papers on this topic are on the way.</p>`;
+  d.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+document.getElementById("venn-svg").addEventListener("click", (evt) => {
+  const hit = vennPointTopics(evt);
+  if (hit.length >= 2) selectIntersection(hit);
+  else if (hit.length === 1) selectTopic(hit[0]);
+});
+
+/* view tabs */
+document.querySelectorAll(".view-tabs button").forEach(btn =>
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".view-tabs button").forEach(b => b.classList.toggle("on", b === btn));
+    document.querySelectorAll(".view").forEach(v =>
+      v.classList.toggle("on", v.id === "view-" + btn.dataset.view));
+  }));
+
+/* Scales each heterogeneity subtype's point in the diagram by how many
+   papers use that exact tag — more papers, bigger circle — so the
+   diagram reflects real research volume instead of being a flat, static
+   grid. Called once files/publications.csv finishes loading (see
+   loadSheet() below); until then every point sits at its base radius. */
+function updateAxisPointSizes() {
+  Object.keys(HETEROGENEITY_SUBTYPES).forEach(name => {
+    const circle = document.querySelector(`.axis-point[data-topic="${CSS.escape(name)}"] circle`);
+    if (!circle) return;
+    const count = papers.filter(p => (p.tags || []).includes(name)).length;
+    circle.setAttribute("r", Math.min(3.5 + count * 2.2, 13));
+  });
+}
+
+/* CSV loading (shared parser used below for both publications and news) */
+function parseCSV(text) {
+  const rows = []; let row = [], cur = "", inQ = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (inQ) {
+      if (c === '"') { if (text[i+1] === '"') { cur += '"'; i++; } else inQ = false; }
+      else cur += c;
+    } else if (c === '"') inQ = true;
+    else if (c === ",") { row.push(cur); cur = ""; }
+    else if (c === "\n" || c === "\r") {
+      if (cur !== "" || row.length) { row.push(cur); rows.push(row); row = []; cur = ""; }
+    } else cur += c;
+  }
+  if (cur !== "" || row.length) { row.push(cur); rows.push(row); }
+  return rows;
+}
+
+async function loadSheet() {
+  if (!PUBS_SHEET_URL) return false;
+  try {
+    const res = await fetch(PUBS_SHEET_URL);
+    if (!res.ok) return false;
+    const rows = parseCSV(await res.text());
+    const head = rows[0].map(h => h.trim().toLowerCase());
+    const idx = k => head.indexOf(k);
+    const loaded = rows.slice(1).filter(r => r[idx("title")]).map(r => ({
+      title: r[idx("title")], authors: r[idx("authors")],
+      conference: r[idx("conference")], year: r[idx("year")],
+      tags: (r[idx("tags")] || "").split(";").map(s => s.trim()).filter(Boolean),
+      highlight: (r[idx("highlight")] || "").trim(),
+      pdf: r[idx("pdf")] || "", code: r[idx("code")] || "",
+    }));
+    if (loaded.length) {
+      papers = loaded;
+      updateAxisPointSizes();
+      if (selectedTopic) selectTopic(selectedTopic);
+      return true;
+    }
+    return false;
+  } catch (e) { return false; }
+  /* files/publications.csv unreachable — papers stays empty; "Papers on
+     this topic are on the way." shows in the Research panel until the
+     site is served over HTTP. */
+}
+
+loadSheet();
+</script>
+<script>
+/* ==========================================================
+   NEWS SIDEBAR
+   ----------------------------------------------------------
+   News lives ENTIRELY in files/news.csv (same file news.html reads)
+   — no news data is duplicated here. Columns: date | text
+   This widget only shows the latest few items; the full history is
+   on news.html (linked from the nav and from "View all news" below).
+   ========================================================== */
+const NEWS_SHEET_URL = "files/news.csv";
+const NEWS_SIDEBAR_COUNT = 5;
+
+function newsItemHTML(n) {
+  return `<div class="news-item-sm">
+    <span class="news-date-sm">${n.date}</span>
+    <span class="news-text-sm">${n.text}</span>
+  </div>`;
+}
+
+async function loadNewsSidebar() {
+  const el = document.getElementById("news-sidebar-list");
+  if (!NEWS_SHEET_URL) { el.innerHTML = `<p class="tp-empty">News are on the way.</p>`; return; }
+  try {
+    const res = await fetch(NEWS_SHEET_URL);
+    if (!res.ok) throw new Error("fetch failed");
+    const rows = parseCSV(await res.text());
+    const head = rows[0].map(h => h.trim().toLowerCase());
+    const idx = k => head.indexOf(k);
+    const items = rows.slice(1).filter(r => r[idx("date")])
+      .map(r => ({ date: r[idx("date")], text: r[idx("text")] }));
+    el.innerHTML = items.length
+      ? items.slice(0, NEWS_SIDEBAR_COUNT).map(newsItemHTML).join("")
+      : `<p class="tp-empty">News are on the way.</p>`;
+  } catch (e) {
+    el.innerHTML = `<p class="tp-empty">Could not load files/news.csv — needs the site served over HTTP.</p>`;
+  }
+}
+loadNewsSidebar();
+</script>
+<script>
+/* ==========================================================
+   UI STATE PERSISTENCE (view tab, selected topic, scroll
+   position) across reloads within the same tab — so a Live
+   Server auto-refresh while editing doesn't keep resetting the
+   page to its initial state. Uses sessionStorage, so it clears
+   itself once the tab is actually closed rather than lingering
+   forever.
+   ========================================================== */
+(function () {
+  const SKEY = "dais-site-ui-state";
+
+  function currentState() {
+    const onTab = document.querySelector(".view-tabs button.on");
+    return {
+      scrollY: window.scrollY,
+      viewTab: onTab ? onTab.dataset.view : null,
+      topic: typeof selectedTopic !== "undefined" ? selectedTopic : null,
+    };
+  }
+  function saveState() {
+    try { sessionStorage.setItem(SKEY, JSON.stringify(currentState())); } catch (e) {}
+  }
+  function restoreState() {
+    let s = null;
+    try { s = JSON.parse(sessionStorage.getItem(SKEY) || "null"); } catch (e) {}
+    if (!s) return;
+
+    if (s.viewTab) {
+      const btn = document.querySelector('.view-tabs button[data-view="' + s.viewTab + '"]');
+      if (btn && !btn.classList.contains("on")) btn.click();
+    }
+    if (s.topic && typeof TOPICS !== "undefined" && TOPICS[s.topic]) selectTopic(s.topic, false);
+    if (typeof s.scrollY === "number") {
+      /* wait two frames so the restored content (topic panel) has
+         been laid out before we jump to the saved offset */
+      requestAnimationFrame(() => requestAnimationFrame(() => window.scrollTo(0, s.scrollY)));
+    }
+  }
+
+  document.addEventListener("click", e => {
+    if (e.target.closest(".view-tabs button") || e.target.closest("[data-topic]")) {
+      setTimeout(saveState, 0);
+    }
+  });
+  let scrollT;
+  window.addEventListener("scroll", () => {
+    clearTimeout(scrollT);
+    scrollT = setTimeout(saveState, 200);
+  });
+  window.addEventListener("beforeunload", saveState);
+
+  restoreState();
+})();
+</script>
+</body>
+</html>

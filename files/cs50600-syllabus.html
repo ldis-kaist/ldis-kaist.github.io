@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CS.50600 Database Systems — Syllabus</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0c0c0c; --soft: #4a4a4a; --faint: #8b8b8b;
+    --line: #dcdcd8; --dark: #b8b8b2; --accent: #004191; --accent-soft: #e9f0f9;
+  }
+  @page { size: A4; margin: 16mm 14mm; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #fff; }
+  body {
+    font-family: 'Inter', sans-serif; font-size: 9.5pt; color: var(--ink);
+    line-height: 1.5; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .page { padding: 0 4mm; }
+  .mono { font-family: 'Inter', sans-serif; }
+
+  /* header */
+  .head { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2.5px solid var(--ink); padding-bottom: 12px; }
+  .brand { font-weight: 800; font-size: 15pt; letter-spacing: -0.02em; }
+  .brand span { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 7.5pt; color: var(--faint); margin-left: 8px; letter-spacing: .02em; }
+  .head-right { font-family: 'Inter', sans-serif; font-size: 7.5pt; color: var(--soft); text-align: right; line-height: 1.6; }
+
+  .course { margin-top: 12px; }
+  .overline { font-family: 'Inter', sans-serif; font-size: 8pt; letter-spacing: .15em; text-transform: uppercase; color: var(--accent); }
+  h1 { font-size: 20pt; font-weight: 800; letter-spacing: -0.025em; margin-top: 6px; }
+  .subtitle { color: var(--soft); margin-top: 4px; font-size: 10pt; }
+
+  /* info grid */
+  .info { display: grid; grid-template-columns: 1fr 1fr 1fr; border: 1px solid var(--ink); margin-top: 16px; }
+  .info div { padding: 5px 12px; border-right: 1px solid var(--line); }
+  .info div:nth-child(3n) { border-right: none; }
+  .info div:nth-child(n+4) { border-top: 1px solid var(--line); }
+  .info b { display: block; font-family: 'Inter', sans-serif; font-weight: 500; font-size: 6.8pt; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); margin-bottom: 2px; }
+  .info span { font-size: 9pt; font-weight: 500; }
+
+  h2 { font-size: 11.5pt; font-weight: 700; letter-spacing: -0.01em; margin: 12px 0 6px; padding-top: 9px; border-top: 1px solid var(--dark); }
+  h2 .no { font-family: 'Inter', sans-serif; font-size: 8pt; color: var(--accent); font-weight: 500; margin-right: 8px; }
+  p { color: var(--soft); margin-bottom: 7px; }
+  p strong { color: var(--ink); }
+
+  ul.compact { margin: 4px 0 4px 0; list-style: none; }
+  ul.compact li { color: var(--soft); padding-left: 14px; position: relative; margin-bottom: 2px; }
+  ul.compact li::before { content: "–"; position: absolute; left: 0; color: var(--accent); }
+  ul.compact li strong { color: var(--ink); }
+
+  /* schedule table */
+  table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+  th { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 6.8pt; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); text-align: left; padding: 5px 10px; border-bottom: 1.5px solid var(--ink); }
+  td { padding: 4.5px 10px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 8.6pt; }
+  td.wk { font-family: 'Inter', sans-serif; font-size: 8pt; color: var(--accent); white-space: nowrap; width: 34px; }
+  td.topic { font-weight: 600; width: 34%; }
+  td.detail { color: var(--soft); }
+  tr.part td { background: var(--accent-soft); font-family: 'Inter', sans-serif; font-size: 7pt; letter-spacing: .13em; text-transform: uppercase; color: var(--accent); font-weight: 500; padding: 4px 10px; border-bottom: 1px solid var(--line); }
+  tr.exam td.topic, tr.exam td.detail { color: var(--ink); }
+  tr.exam td { background: #f6f6f3; }
+
+  /* grading bar */
+  .gbar { display: flex; height: 20px; border: 1px solid var(--ink); margin: 8px 0 5px; }
+  .gbar div { display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 6.8pt; letter-spacing: .04em; color: #fff; white-space: nowrap; overflow: hidden; }
+  .glegend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 6px; }
+  .glegend span { font-size: 8.3pt; color: var(--soft); }
+  .glegend b { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 8pt; color: var(--ink); }
+
+  .note { border: 1px solid var(--dark); background: #fafaf7; padding: 10px 14px; margin-top: 10px; font-size: 8.6pt; color: var(--soft); }
+  .note b { color: var(--ink); }
+
+  .foot { margin-top: 4px; padding-top: 5px; border-top: 1px solid var(--dark); display: flex; justify-content: space-between; font-family: 'Inter', sans-serif; font-size: 7pt; color: var(--faint); }
+
+  .pagebreak { break-before: page; }
+  h2, tr { break-inside: avoid; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="course">
+    <span class="overline">CS.50600 · Graduate · 3 Credits</span>
+    <h1>Database Systems</h1>
+    <p class="subtitle">How database systems work, why they are built that way, and how recent research is rebuilding them.</p>
+  </div>
+
+  <div class="info">
+    <div><b>Instructor</b><span>Kyoungmin Kim</span></div>
+    <div><b>Semester</b><span>Fall 2026</span></div>
+    <div><b>Class time (classroom)</b><span>Tue / Thu 16:00–17:30 (E3-1 2445)</span></div> 
+    <div><b>Office hours</b><span>Thu 17:30–18:30, or by appointment</span></div>
+    <div><b>L:L:C (AU)</b><span>3 : 0 : 3 (0)</span></div>
+    <!-- Midterm — Week 8, in class (no final) -->
+    <div><b>Exam time (classroom)</b><span>No mid/final term, but 2 quizzes</span></div>
+    <!-- Undergraduate DB (or consent) -->
+    <div><b>Prerequisites</b><span>None &mdash; familiarity with data structures expected</span></div>
+    <div><b>Language</b><span>English</span></div>
+    <div> </div>
+    <!-- <div><b>Education 4.0 Q</b><span>Y — Lecture 50% · quiz & project 50%</span></div> -->
+  </div>
+
+  <h2><span class="no">01</span>Course Description</h2>
+  <p>
+    This course takes you inside database systems, built up from first principles, in the order the
+    problems actually arise. We start from why the world needs so many different data systems and how a
+    system stacks up from SQL down to data storage. Then we visit how an SQL query is processed in the
+    most naive way, how the data flows between hardware resources, then adding classic ideas designed to
+    solve specific issues, such as indexes, better operators, optimizers, and materialized views. We visit
+    the engines running today's analytics and finish at the research frontier where AI and databases meet.
+  </p>
+
+  <h2><span class="no">02</span>Textbooks &amp; Readings</h2>
+  <ul class="compact">
+    <li><strong>Textbook:</strong> Silberschatz, Korth &amp; Sudarshan, <em>Database System Concepts</em>, 7th ed., McGraw-Hill, 2020.</li>
+    <li><strong>Additional reading:</strong> Bailis, Hellerstein &amp; Stonebraker (eds.), <em>Readings in Database Systems</em> (“the Red Book”), 5th ed.</li>
+    <li><strong>Systems overview:</strong> Hellerstein, Stonebraker &amp; Hamilton, <em>Architecture of a Database System</em>, Foundations &amp; Trends in Databases, 2007.</li>
+    <li><strong>Research papers:</strong> Recommended papers for weekly topics; either representative or state-of-the-art </li>
+  </ul>
+
+  <h2><span class="no">03</span>Grading</h2>
+  <div class="gbar">
+    <div style="width:60%;background:#004191;">PROJECT 60%</div>
+    <div style="width:10%;background:#2d64ad;">REVIEW 10%</div>
+    <div style="width:30%;background:#5c88c2;">QUIZ 30%</div>
+  </div>
+  <ul class="compact">
+    <li><strong>Project 60%</strong> — semester-long, team-based; any relevant topic in data management/processing is allowed, so you may pick such an issue or bottleneck from the domains of AI/HCI/HW/etc.; ultimate goal is to develop a research idea out of this project that aligns with your expertise and interest; still, you need to clearly define data, workload, and hardware setup of the problem you tackle.</li>
+  <ul class="compact" style="margin:2px 0 8px 20px; font-size:8.3pt;">
+  <li>Proposal presentation — 10%</li>
+  <li>Final presentation — 30%</li>
+  <li>Final report and deliverables — 20%</li>
+  </ul>
+    <li><strong>Paper review 10%</strong> — short written review of 1 paper (select among listed candidates) including problem definition, motivation, methodology, and result</li>
+    <li><strong>Quiz 30%</strong> — 2 quizzes, each with 15%</li>
+  </ul>
+
+  <div class="pagebreak"></div>
+
+  <h2 style="border-top:none;padding-top:0;"><span class="no">04</span>Weekly Schedule</h2>
+  <table>
+    <tr><th>Wk</th><th>Topic</th><th>Keywords</th></tr>
+    <tr class="part"><td colspan="3">Part I &mdash; Why data systems?</td></tr>
+    <tr><td class="wk">01</td><td class="topic">Intro, the world of data systems</td><td class="detail">Heterogeneous data, workload, and hardware setups; a zoo of systems; the system stack; where AI meets DB</td></tr>
+    <tr><td class="wk">02</td><td class="topic">The relational model &amp; SQL</td><td class="detail">Relational model, schema, keys, SQL, OLAP vs. OLTP</td></tr>
+    <tr><td class="wk">03</td><td class="topic">How data lives on disk &amp; the memory wall</td><td class="detail">Memory hierarchy, latency and throughput, sequential vs. random I/O, pages, buffer management</td></tr>
+    <tr class="part"><td colspan="3">Part II &mdash; Running a simple plan</td></tr>
+    <tr><td class="wk">04</td><td class="topic">From SQL to a plan</td><td class="detail">Relational algebra, logical plan, logical operator, Volcano iterator model, materialization vs. pipelining</td></tr>
+    <tr><td class="wk">05</td><td class="topic">Physical operators</td><td class="detail">Sequential / index scan; (index) nested-loop / hash / sort-merge join</td></tr>
+    <tr><td class="wk">06</td><td class="topic">Indexes: paying storage to skip work</td><td class="detail">B+-tree, hash table, LSM-tree, bitmap, Bloom filter</td></tr>
+    <tr class="part"><td colspan="3">Part III &mdash; Choosing (and fixing) plans</td></tr>
+    <tr><td class="wk">07</td><td class="topic">Plan equivalence &amp; cost-based optimization</td><td class="detail">Rewrite rule, predicate pushdown, join ordering, dynamic programming, from Cascades to Orca</td></tr>
+    <tr class="exam"><td class="wk">08</td><td class="topic">Project proposal presentations</td><td class="detail">In class (mid-term week &mdash; no exam)</td></tr>
+    <tr><td class="wk">09</td><td class="topic">Cost models &amp; cardinality estimation</td><td class="detail">Cost model, selectivity, histogram, sampling, sketch, correlated predicates</td></tr>
+    <tr><td class="wk">10</td><td class="topic">When plans go wrong &mdash; or take too long</td><td class="detail">Adaptive query processing, speculation, approximate query processing, online aggregation</td></tr>
+    <tr class="part"><td colspan="3">Part IV &mdash; Modern analytics engines</td></tr>
+    <tr><td class="wk">11</td><td class="topic">Precomputation: materialized views</td><td class="detail">Materialized view, view selection, incremental view maintenance</td></tr>
+    <tr><td class="wk">12</td><td class="topic">Columnar engines, open formats &amp; the cloud</td><td class="detail">Columnar layout, vectorized execution, morsel-driven parallelism, DuckDB, Parquet, zonemap, Snowflake</td></tr>
+    <tr class="part"><td colspan="3">Part V &mdash; When data changes &amp; environments change</td></tr>
+    <tr><td class="wk">13</td><td class="topic">OLTP: transactions &amp; recovery</td><td class="detail">ACID, serializability, 2PL, OCC, MVCC, ARIES</td></tr>
+    <tr><td class="wk">14</td><td class="topic">Parallel, distributed, cloud-native, GPU</td><td class="detail">Partitioning, distributed joins, serverless, compute-storage disaggregation, GPU acceleration</td></tr>
+    <tr class="part"><td colspan="3">Part VI &mdash; Databases meet AI</td></tr>
+    <tr><td class="wk">15</td><td class="topic">The AI frontier</td><td class="detail">NL2SQL, learned index / optimizer, semantic operator, vector search</td></tr>
+    <tr class="exam"><td class="wk">16</td><td class="topic">Final project presentations</td><td class="detail">In class (final-term week &mdash; no exam)</td></tr>
+  </table>
+
+  <div style="break-inside:avoid;">
+  <h2><span class="no">05</span>Policies</h2>
+  <ul class="compact">
+    <li><strong>Late policy:</strong> Late submissions are not permitted without prior permission.</li>
+    <li><strong>Collaboration:</strong> Discuss freely, but write alone for reviews. Project is team-based.</li>
+    <li><strong>AI tools:</strong> Permitted as assistants (coding, editing) with disclosure in your report. You are responsible for correctness, and quizzes are closed-AI.</li>
+  </ul>
+  </div>
+
+</div>
+</body>
+</html>
