@@ -38,7 +38,7 @@
 <nav>
   <div class="wrap nav-inner">
     <a class="brand" href="#"><span data-site="brand-abbr"></span><span data-site="brand-tagline"></span></a>
-    <div class="nav-links">
+    <div class="nav-links" id="nav-links">
       <a href="#research">Research</a>
       <a href="projects.html">Projects</a>
       <a href="publications.html">Publications</a>
@@ -47,6 +47,7 @@
       <a href="news.html">News</a>
       <a href="#join">Join</a>
     </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
   </div>
 </nav>
 
@@ -426,10 +427,16 @@ function selectTopic(name, scroll) {
     document.getElementById("td-desc").style.display = "";
     axisHint.hidden = true;
     papersSection.hidden = false;
-    const rel = papers.filter(p => (p.tags || []).includes(name));
-    document.getElementById("td-papers").innerHTML = rel.length
-      ? rel.map(pubHTML).join("")
-      : `<p class="tp-empty">Papers on this topic are on the way.</p>`;
+    if (sub.implicitNote) {
+      // Deliberately-untagged subtype (e.g. CPU/DRAM) — explain why
+      // instead of showing a misleading "papers on the way" empty state.
+      document.getElementById("td-papers").innerHTML = `<p class="tp-empty">${sub.implicitNote}</p>`;
+    } else {
+      const rel = papers.filter(p => (p.tags || []).includes(name));
+      document.getElementById("td-papers").innerHTML = rel.length
+        ? rel.map(pubHTML).join("")
+        : `<p class="tp-empty">Papers on this topic are on the way.</p>`;
+    }
   } else {
     const t = TOPICS[name];
     document.getElementById("td-tag").textContent = t.group;
@@ -689,5 +696,6 @@ loadNewsSidebar();
   restoreState();
 })();
 </script>
+<script src="files/nav.js"></script>
 </body>
 </html>

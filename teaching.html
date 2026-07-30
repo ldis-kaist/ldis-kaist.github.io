@@ -21,7 +21,7 @@
 <nav>
   <div class="wrap nav-inner">
     <a class="brand" href="index.html"><span data-site="brand-abbr"></span><span data-site="brand-tagline"></span></a>
-    <div class="nav-links">
+    <div class="nav-links" id="nav-links">
       <a href="index.html#research">Research</a>
       <a href="projects.html">Projects</a>
       <a href="publications.html">Publications</a>
@@ -30,6 +30,7 @@
       <a href="news.html">News</a>
       <a href="index.html#join">Join</a>
     </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
   </div>
 </nav>
 
@@ -147,5 +148,6 @@ loadSheetGeneric(COURSES_SHEET_URL, renderCourses).then(ok => {
     `<p class="tp-empty">Could not load files/courses.csv — this page needs to be served over HTTP (Live Server, GitHub Pages, etc.), not opened directly as a file.</p>`;
 });
 </script>
+<script src="files/nav.js"></script>
 </body>
 </html>

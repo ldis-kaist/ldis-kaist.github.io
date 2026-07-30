@@ -51,7 +51,7 @@ const TOPIC_GROUP_ORDER = ["Domain", "System layer", "Methodology", "Heterogenei
    in TOPICS below; now they're the real, clickable unit).
 
    A paper's files/publications.csv `tags` column should normally use
-   a SPECIFIC subtype (e.g. "Relation", "GPU", "Full Query") rather
+   a SPECIFIC subtype (e.g. "Relation", "GPU", "Analytics Query") rather
    than the generic axis name — that's what shows up as the paper's
    tag pill (publications.html, the topic-detail panel), and it's
    what a click on that point in the homepage diagram matches against
@@ -64,6 +64,11 @@ const TOPIC_GROUP_ORDER = ["Domain", "System layer", "Methodology", "Heterogenei
    the 3 lines it's plotted on, `desc` is the sentence shown when it's
    clicked. Order within an axis is display order along that line
    (near origin → near arrow tip). No other file needs to change.
+
+   Optional `implicitNote`: for a subtype that's deliberately never
+   used as a paper tag (e.g. "CPU"/"DRAM" — true of nearly every paper,
+   so tagging it wouldn't distinguish anything), set this to explain
+   that on click instead of showing an empty "papers on the way" list.
    ========================================================== */
 const HETEROGENEITY_AXES = ["Heterogeneous Data", "Heterogeneous Workload", "Heterogeneous Hardware"];
 
@@ -74,13 +79,15 @@ const HETEROGENEITY_SUBTYPES = {
   "Model":          { axis: "Heterogeneous Data", desc: "Model weights, activations, and other artifacts of a trained model (LLM)." },
 
   "Single Operator":  { axis: "Heterogeneous Workload", desc: "A single operator such as a filter or join, run in isolation." },
-  "Full Query":       { axis: "Heterogeneous Workload", desc: "A complete analytical query workload, e.g. TPC-H-style queries." },
+  "Analytics Query":  { axis: "Heterogeneous Workload", desc: "A complete analytical query workload, e.g. TPC-H-style queries." },
   "Approximate Query":{ axis: "Heterogeneous Workload", desc: "Queries that trade exactness for speed, returning an approximate answer." },
   "Recursive Query":  { axis: "Heterogeneous Workload", desc: "Queries evaluated step by step, e.g. LLM token-by-token generation." },
-  "Incremental View": { axis: "Heterogeneous Workload", desc: "Maintaining a materialized view incrementally as base data changes." },
+  "Continuous Query": { axis: "Heterogeneous Workload", desc: "Maintaining a materialized view incrementally as base data changes." },
 
-  "CPU":         { axis: "Heterogeneous Hardware", desc: "General-purpose processing — the default execution target." },
-  "DRAM":        { axis: "Heterogeneous Hardware", desc: "Main memory, including disaggregated / tiered memory architectures." },
+  "CPU":         { axis: "Heterogeneous Hardware", desc: "General-purpose processing — the default execution target.",
+                   implicitNote: "Almost every paper runs on CPU by default, so it isn't used as a distinguishing tag here — only work that specifically targets unusual hardware (GPU, distributed, ...) gets tagged with something more specific." },
+  "DRAM":        { axis: "Heterogeneous Hardware", desc: "Main memory, including disaggregated / tiered memory architectures.",
+                   implicitNote: "Almost every paper runs on plain DRAM by default, so it isn't used as a distinguishing tag here — only work that specifically targets unusual memory/hardware gets tagged with something more specific." },
   "GPU":         { axis: "Heterogeneous Hardware", desc: "Massively parallel hardware, increasingly used for query execution." },
   "Distributed": { axis: "Heterogeneous Hardware", desc: "Data and computation spread across multiple machines." },
 };
