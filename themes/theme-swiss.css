@@ -252,6 +252,7 @@
     font-family: 'Inter', sans-serif;
   }
   .bio-contact { margin-top: 10px; font-size: 14px; color: var(--ink-soft); }
+  .bio-links { margin-top: 6px; font-size: 14px; color: var(--ink-soft); }
   .recruit-line { margin-top: 32px; padding: 18px 22px; border: 1px solid var(--ink); font-size: 14px; color: var(--ink-soft); max-width: 720px; background: #fff; }
 
   /* ---------- join ---------- */
