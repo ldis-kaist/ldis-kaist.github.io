@@ -242,7 +242,9 @@
     background: var(--paper-2); border: 1px solid var(--ink);
     display: grid; place-items: center;
     font-weight: 800; font-size: 32px; color: var(--ink-faint);
+    overflow: hidden;
   }
+  .prof-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .prof h3 { font-size: 20px; }
   .prof .role { font-size: 13px; color: var(--accent); margin-top: 2px; font-weight: 500; font-family: 'Inter', sans-serif; }
   .prof .bio { margin-top: 12px; font-size: 14px; color: var(--ink-soft); }
