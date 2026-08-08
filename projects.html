@@ -45,8 +45,10 @@
       Ongoing &amp; open projects at <span data-site="brand-abbr"></span>. <a href="index.html">&larr; Back to the lab homepage</a>
     </p>
     <p class="hero-sub">
-      Even for ongoing projects, there are plenty of open problems to solve —
-      feel free to <a data-site="join-email" href="#">reach out</a> if anything catches your eye.
+      Even for ongoing projects — with or without an existing team — there are plenty of
+      open problems to solve, and we especially welcome students who can work onsite at KAIST.
+      The descriptions below are intentionally high-level — concrete details are best discussed
+      directly with the professor. Feel free to <a data-site="join-email" href="#">reach out</a> if anything catches your eye.
     </p>
   </div>
 </header>
@@ -99,7 +101,7 @@ function parseProjectMD(text) {
     const kv = line.match(/^(title|status|area):\s*(.*)$/i);
     if (kv) p[kv[1].toLowerCase()] = kv[2].trim();
   }
-  for (const k of ["motivation", "goal", "timeline"])
+  for (const k of ["motivation", "goal", "team", "timeline"])
     p[k] = (secs[k] || []).join("\n").trim();
   return p;
 }
@@ -124,6 +126,7 @@ function renderProjects(list) {
       <div class="acc-body">
         ${fieldHTML("Motivation", p.motivation)}
         ${fieldHTML("Goal", p.goal)}
+        ${fieldHTML("Team", p.team)}
         ${fieldHTML("Timeline", p.timeline)}
         <p class="p-note">Interested? <a href="mailto:${SITE.CONTACT_EMAIL}?subject=[${SITE.ABBR}] ${encodeURIComponent(p.status || "Project")}: ${encodeURIComponent(p.title)}">Email the professor</a> with a short note on why this topic.</p>
       </div>

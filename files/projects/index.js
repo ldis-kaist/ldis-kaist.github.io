@@ -17,6 +17,11 @@
      ## Goal
      free text
 
+     ## Team
+     e.g. "Currently working with N students." (leave empty and
+     the site shows "discuss with the professor" — which does NOT
+     mean nobody works on it, just that it isn't public)
+
      ## Timeline
      free text (leave the section empty and the site shows
      "discuss with the professor" instead)
