@@ -15,6 +15,9 @@
 <!-- Lab name/abbreviation/contact email live in files/site-config.js,
      shared by every page — see that file to change them site-wide. -->
 <script src="files/site-config.js"></script>
+<!-- One project = one Markdown file in files/projects/ — the manifest
+     below lists which files to show and in what order. -->
+<script src="files/projects/index.js"></script>
 </head>
 <body>
 
@@ -40,6 +43,10 @@
     <h1>Projects</h1>
     <p class="hero-sub">
       Ongoing &amp; open projects at <span data-site="brand-abbr"></span>. <a href="index.html">&larr; Back to the lab homepage</a>
+    </p>
+    <p class="hero-sub">
+      Even for ongoing projects, there are plenty of open problems to solve —
+      feel free to <a data-site="join-email" href="#">reach out</a> if anything catches your eye.
     </p>
   </div>
 </header>
@@ -71,40 +78,38 @@ applySiteBrand();
 /* ==========================================================
    DATA
    ----------------------------------------------------------
-   Projects live ENTIRELY in files/projects.csv — no project data is
-   duplicated here. This page only fetches and renders that CSV.
-   Columns: title | status | area | motivation | goal | timeline
-     - status: Ongoing or Open
-     - leave any of motivation/goal/timeline EMPTY and the site shows
-       "discuss with the professor" instead.
+   Projects live in files/projects/ — ONE MARKDOWN FILE PER
+   PROJECT, listed (and ordered) by files/projects/index.js.
+   Each file: "title:/status:/area:" header lines, then
+   "## Motivation", "## Goal", "## Timeline" sections. Leave a
+   section empty and the site shows "discuss with the professor".
    Requires the site to be served over HTTP (Live Server / GitHub
-   Pages) — opening this page directly via file:// cannot fetch local
-   files, so projects won't load that way; see the error message below.
+   Pages) — opening this page directly via file:// cannot fetch
+   local files; see the error message below.
    ========================================================== */
-const PROJECTS_SHEET_URL = "files/projects.csv";
 const ASK_PROFESSOR = "Not public yet &mdash; discuss with the professor.";
 
-function parseCSV(text) {
-  const rows = []; let row = [], cur = "", inQ = false;
-  for (let i = 0; i < text.length; i++) {
-    const c = text[i];
-    if (inQ) {
-      if (c === '"') { if (text[i+1] === '"') { cur += '"'; i++; } else inQ = false; }
-      else cur += c;
-    } else if (c === '"') inQ = true;
-    else if (c === ",") { row.push(cur); cur = ""; }
-    else if (c === "\n" || c === "\r") {
-      if (cur !== "" || row.length) { row.push(cur); rows.push(row); row = []; cur = ""; }
-    } else cur += c;
+function parseProjectMD(text) {
+  const p = {}, secs = {};
+  let section = null;
+  for (const line of text.split(/\r?\n/)) {
+    const hd = line.match(/^##\s+(.*)$/);
+    if (hd) { section = hd[1].trim().toLowerCase(); secs[section] = []; continue; }
+    if (section) { secs[section].push(line); continue; }
+    const kv = line.match(/^(title|status|area):\s*(.*)$/i);
+    if (kv) p[kv[1].toLowerCase()] = kv[2].trim();
   }
-  if (cur !== "" || row.length) { row.push(cur); rows.push(row); }
-  return rows;
+  for (const k of ["motivation", "goal", "timeline"])
+    p[k] = (secs[k] || []).join("\n").trim();
+  return p;
 }
 
 function fieldHTML(label, value) {
   const v = (value || "").trim();
-  return `<div class="p-field"><h5>${label}</h5>` +
-    (v ? `<p>${v}</p>` : `<p class="ask">${ASK_PROFESSOR}</p>`) + `</div>`;
+  const body = v
+    ? v.split(/\n\s*\n/).map(par => `<p>${par}</p>`).join("")
+    : `<p class="ask">${ASK_PROFESSOR}</p>`;
+  return `<div class="p-field"><h5>${label}</h5>${body}</div>`;
 }
 
 function renderProjects(list) {
@@ -133,24 +138,25 @@ document.addEventListener("click", e => {
   head.setAttribute("aria-expanded", on);
 });
 
-async function loadSheetGeneric(url, apply) {
-  if (!url) return false;
+async function loadProjects() {
+  if (typeof PROJECT_FILES === "undefined" || !PROJECT_FILES.length) return false;
   try {
-    const res = await fetch(url);
-    if (!res.ok) return false;
-    const rows = parseCSV(await res.text());
-    const head = rows[0].map(h => h.trim().toLowerCase());
-    const items = rows.slice(1).filter(r => r.some(c => (c || "").trim()))
-      .map(r => Object.fromEntries(head.map((h, j) => [h, r[j] || ""])));
-    if (items.length) { apply(items); return true; }
-    return false;
+    const items = await Promise.all(PROJECT_FILES.map(async fn => {
+      const res = await fetch("files/projects/" + fn);
+      if (!res.ok) throw new Error(fn);
+      return parseProjectMD(await res.text());
+    }));
+    const valid = items.filter(p => p.title);
+    if (!valid.length) return false;
+    renderProjects(valid);
+    return true;
   } catch (e) { return false; }
 }
 
 document.getElementById("proj-list").innerHTML = `<p class="tp-empty">Loading projects…</p>`;
-loadSheetGeneric(PROJECTS_SHEET_URL, renderProjects).then(ok => {
+loadProjects().then(ok => {
   if (!ok) document.getElementById("proj-list").innerHTML =
-    `<p class="tp-empty">Could not load files/projects.csv — this page needs to be served over HTTP (Live Server, GitHub Pages, etc.), not opened directly as a file.</p>`;
+    `<p class="tp-empty">Could not load files/projects/ — this page needs to be served over HTTP (Live Server, GitHub Pages, etc.), not opened directly as a file. Check that every file listed in files/projects/index.js exists.</p>`;
 });
 </script>
 <script src="files/nav.js"></script>
