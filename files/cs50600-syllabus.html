@@ -73,6 +73,7 @@
 
   .pagebreak { break-before: page; }
   h2, tr { break-inside: avoid; }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-soft); }
 </style>
 </head>
 <body>
@@ -87,7 +88,7 @@
     <div><b>Instructor</b><span>Kyoungmin Kim</span></div>
     <div><b>Semester</b><span>Fall 2026</span></div>
     <div><b>Class time (classroom)</b><span>Tue / Thu 16:00–17:30 (E3-1 2445)</span></div> 
-    <div><b>Office hours</b><span>Thu 17:30–18:30, or by appointment</span></div>
+    <div><b>Office hours</b><span>Thu 17:30–18:30 (E3-1 4405), or by appointment</span></div>
     <div><b>L:L:C (AU)</b><span>3 : 0 : 3 (0)</span></div>
     <!-- Midterm — Week 8, in class (no final) -->
     <div><b>Exam time (classroom)</b><span>No mid/final term, but 2 quizzes</span></div>
@@ -129,7 +130,7 @@
   <li>Final presentation — 30%</li>
   <li>Final report and deliverables — 20%</li>
   </ul>
-    <li><strong>Paper review 10%</strong> — short written review of 1 paper (select among listed candidates) including problem definition, motivation, methodology, and result</li>
+    <li><strong>Paper review 10%</strong> — short written review of 1 paper (select among the <a href="cs50600-papers.html">candidate papers</a>) including problem definition, motivation, methodology, and result</li>
     <li><strong>Quiz 30%</strong> — 2 quizzes, each with 15%</li>
   </ul>
 
@@ -141,24 +142,24 @@
     <tr class="part"><td colspan="3">Part I &mdash; Why data systems?</td></tr>
     <tr><td class="wk">01</td><td class="topic">Intro, the world of data systems</td><td class="detail">Heterogeneous data, workload, and hardware setups; a zoo of systems; the system stack; where AI meets DB</td></tr>
     <tr><td class="wk">02</td><td class="topic">The relational model &amp; SQL</td><td class="detail">Relational model, schema, keys, SQL, OLAP vs. OLTP</td></tr>
-    <tr><td class="wk">03</td><td class="topic">How data lives on disk &amp; the memory wall</td><td class="detail">Memory hierarchy, latency and throughput, sequential vs. random I/O, pages, buffer management</td></tr>
     <tr class="part"><td colspan="3">Part II &mdash; Running a simple plan</td></tr>
-    <tr><td class="wk">04</td><td class="topic">From SQL to a plan</td><td class="detail">Relational algebra, logical plan, logical operator, Volcano iterator model, materialization vs. pipelining</td></tr>
-    <tr><td class="wk">05</td><td class="topic">Physical operators</td><td class="detail">Sequential / index scan; (index) nested-loop / hash / sort-merge join</td></tr>
-    <tr><td class="wk">06</td><td class="topic">Indexes: paying storage to skip work</td><td class="detail">B+-tree, hash table, LSM-tree, bitmap, Bloom filter</td></tr>
+    <tr><td class="wk">03</td><td class="topic">Storage, the buffer pool &amp; query execution</td><td class="detail">Heap file, page directory; buffer pool, replacement policy, mmap; logical vs. physical plans, iterator model, vectorized execution</td></tr>
+    <tr><td class="wk">04</td><td class="topic">Scans, sorting &amp; aggregation</td><td class="detail">Sequential / index scan; external merge sort; sort- and hash-aggregation</td></tr>
+    <tr><td class="wk">05</td><td class="topic">Joins &amp; B+-trees</td><td class="detail">(Index) nested-loop / hash / sort-merge join, I/O cost; B+-tree structure, splits, clustered vs. secondary index</td></tr>
+    <tr><td class="wk">06</td><td class="topic">Hash &amp; LSM indexes; plan rewriting</td><td class="detail">Hash index, LSM-tree, Bloom filter; rewrite rules, predicate pushdown, bottom-up dynamic programming &mdash; <b>Quiz 1</b> (Thu; scope: W1&ndash;W6 Tue)</td></tr>
     <tr class="part"><td colspan="3">Part III &mdash; Choosing (and fixing) plans</td></tr>
-    <tr><td class="wk">07</td><td class="topic">Plan equivalence &amp; cost-based optimization</td><td class="detail">Rewrite rule, predicate pushdown, join ordering, dynamic programming, from Cascades to Orca</td></tr>
+    <tr><td class="wk">07</td><td class="topic">Join ordering &amp; proposal dry run</td><td class="detail">Join ordering, search space, transformation-based (top-down) optimization; team dry-run presentations (Thu)</td></tr>
     <tr class="exam"><td class="wk">08</td><td class="topic">Project proposal presentations</td><td class="detail">In class (mid-term week &mdash; no exam)</td></tr>
     <tr><td class="wk">09</td><td class="topic">Cost models &amp; cardinality estimation</td><td class="detail">Cost model, selectivity, histogram, sampling, sketch, correlated predicates</td></tr>
     <tr><td class="wk">10</td><td class="topic">When plans go wrong &mdash; or take too long</td><td class="detail">Adaptive query processing, speculation, approximate query processing, online aggregation</td></tr>
     <tr class="part"><td colspan="3">Part IV &mdash; Modern analytics engines</td></tr>
-    <tr><td class="wk">11</td><td class="topic">Precomputation: materialized views</td><td class="detail">Materialized view, view selection, incremental view maintenance</td></tr>
-    <tr><td class="wk">12</td><td class="topic">Columnar engines, open formats &amp; the cloud</td><td class="detail">Columnar layout, vectorized execution, morsel-driven parallelism, DuckDB, Parquet, zonemap, Snowflake</td></tr>
+    <tr><td class="wk">11</td><td class="topic">Materialized views &amp; columnar storage</td><td class="detail">Materialized view, view selection, incremental view maintenance; columnar layout, compression, late materialization, vectorized execution</td></tr>
+    <tr><td class="wk">12</td><td class="topic">Columnar engines in practice</td><td class="detail">Zone map, morsel-driven parallelism, storage&ndash;compute separation, open table formats</td></tr>
     <tr class="part"><td colspan="3">Part V &mdash; When data changes &amp; environments change</td></tr>
-    <tr><td class="wk">13</td><td class="topic">OLTP: transactions &amp; recovery</td><td class="detail">ACID, serializability, 2PL, OCC, MVCC, ARIES</td></tr>
-    <tr><td class="wk">14</td><td class="topic">Parallel, distributed, cloud-native, GPU</td><td class="detail">Partitioning, distributed joins, serverless, compute-storage disaggregation, GPU acceleration</td></tr>
+    <tr><td class="wk">13</td><td class="topic">OLTP: transactions &amp; concurrency control</td><td class="detail">ACID, conflict serializability, 2PL, deadlocks, OCC, MVCC</td></tr>
+    <tr><td class="wk">14</td><td class="topic">Recovery, distributed &amp; cloud-native</td><td class="detail">WAL, checkpoint, ARIES; partitioning, distributed joins, 2PC, compute-storage disaggregation &mdash; <b>Quiz 2</b> (Thu; scope: W6 Thu&ndash;W14 Tue)</td></tr>
     <tr class="part"><td colspan="3">Part VI &mdash; Databases meet AI</td></tr>
-    <tr><td class="wk">15</td><td class="topic">The AI frontier</td><td class="detail">NL2SQL, learned index / optimizer, semantic operator, vector search</td></tr>
+    <tr><td class="wk">15</td><td class="topic">The AI frontier</td><td class="detail">GPU acceleration, learned index / optimizer, vector search, NL2SQL, semantic operator</td></tr>
     <tr class="exam"><td class="wk">16</td><td class="topic">Final project presentations</td><td class="detail">In class (final-term week &mdash; no exam)</td></tr>
   </table>
 

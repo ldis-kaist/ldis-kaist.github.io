@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CS.50600 Database Systems — Pre-Class Video Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0c0c0c; --soft: #4a4a4a; --faint: #8b8b8b;
+    --line: #dcdcd8; --dark: #b8b8b2; --accent: #004191; --accent-soft: #e9f0f9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #fff; }
+  body {
+    font-family: 'Inter', sans-serif; font-size: 9.5pt; color: var(--ink);
+    line-height: 1.5; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .page { max-width: 860px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  .head { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2.5px solid var(--ink); padding-bottom: 12px; }
+  .brand { font-weight: 800; font-size: 15pt; letter-spacing: -0.02em; }
+  .brand span { font-weight: 400; font-size: 7.5pt; color: var(--faint); margin-left: 8px; letter-spacing: .02em; }
+  .head-right { font-size: 7.5pt; color: var(--soft); text-align: right; line-height: 1.6; }
+
+  .course { margin-top: 12px; }
+  .overline { font-size: 8pt; letter-spacing: .15em; text-transform: uppercase; color: var(--accent); }
+  h1 { font-size: 20pt; font-weight: 800; letter-spacing: -0.025em; margin-top: 6px; }
+  .subtitle { color: var(--soft); margin-top: 4px; font-size: 10pt; }
+
+  h2 { font-size: 11.5pt; font-weight: 700; letter-spacing: -0.01em; margin: 18px 0 6px; padding-top: 12px; border-top: 1px solid var(--dark); }
+  h2 .no { font-size: 8pt; color: var(--accent); font-weight: 500; margin-right: 8px; }
+  p { color: var(--soft); margin-bottom: 7px; }
+  p strong { color: var(--ink); }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  ul.compact { margin: 4px 0; list-style: none; }
+  ul.compact li { color: var(--soft); padding-left: 14px; position: relative; margin-bottom: 3px; }
+  ul.compact li::before { content: "–"; position: absolute; left: 0; color: var(--accent); }
+  ul.compact li strong { color: var(--ink); }
+
+  .callout { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 10px 14px; margin: 10px 0; color: var(--soft); }
+  .callout strong { color: var(--ink); }
+
+  table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  th { font-weight: 500; font-size: 6.8pt; letter-spacing: .1em; text-transform: uppercase; color: var(--faint);
+       text-align: left; padding: 5px 10px; border-bottom: 1.5px solid var(--ink); }
+  td { padding: 7px 10px; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--soft); }
+  td.wk { font-weight: 700; color: var(--ink); white-space: nowrap; width: 34px; }
+  td.topic { width: 30%; color: var(--ink); font-weight: 500; }
+  tr.part td { background: #f4f4f1; font-weight: 700; color: var(--ink); font-size: 8.5pt; letter-spacing: .04em; padding: 5px 10px; }
+  .tag { display: inline-block; font-size: 6.5pt; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+         padding: 1px 6px; border-radius: 3px; margin-right: 5px; vertical-align: 1px; }
+  .tag.core { background: var(--accent); color: #fff; }
+  .tag.opt { background: #e6e6e2; color: var(--soft); }
+  .tag.none { background: #f4f4f1; color: var(--faint); }
+  .vid { margin-bottom: 3px; }
+  .src { color: var(--faint); font-size: 7.5pt; }
+  @media (max-width: 640px) { .tblwrap { overflow-x: auto; } table { min-width: 640px; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="head">
+    <div class="brand">CS.50600 <span>Graduate · Fall 2026</span></div>
+    <div class="head-right">Instructor: Kyoungmin Kim<br>Tue / Thu 16:00–17:30 · E3-1 2445</div>
+  </div>
+
+  <div class="course">
+    <div class="overline">Companion to the Syllabus</div>
+    <h1>Pre-Class Video Guide</h1>
+    <div class="subtitle">Watch the fundamentals before class — spend class time on what videos can't give you.</div>
+  </div>
+
+  <h2><span class="no">01</span>How This Course Runs</h2>
+  <p>
+    This course runs in a <strong>flipped format</strong>. For most weeks, we assign publicly available lectures from
+    CMU's database courses — <a href="https://15445.courses.cs.cmu.edu/fall2025/" target="_blank">15-445/645 Intro to Database Systems</a> (Prof. Andy Pavlo, Fall 2025)
+    and <a href="https://15721.courses.cs.cmu.edu/spring2024/" target="_blank">15-721 Advanced Database Systems</a> (Spring 2024) —
+    as <strong>pre-class material</strong>. These are among the best database systems lectures in the world, and they are free.
+  </p>
+  <p>Class time is then spent on what videos cannot give you:</p>
+  <ul class="compact">
+    <li><strong>Tuesday</strong> — a condensed recap of the week's core ideas, the instructor's perspective on where the field is heading, and discussion of the recommended papers.</li>
+    <li><strong>Thursday</strong> — deep dives, hands-on sessions, and project office hours with direct feedback on your team's work.</li>
+  </ul>
+  <div class="callout">
+    <strong>Watch before Tuesday's class.</strong> Videos marked <span class="tag core">Core</span> are assumed knowledge for that week's
+    discussion and are <strong>in scope for the two quizzes</strong>, together with in-class material. <span class="tag opt">Optional</span> videos
+    are for going deeper and are not quiz material. Weeks without videos are covered entirely in class.
+  </div>
+  <p class="src">
+    Full playlists: <a href="https://www.youtube.com/playlist?list=PLSE8ODhjZXjYMAgsGH-GtY5rJYZ6zjsd5" target="_blank">15-445 Fall 2025</a> ·
+    <a href="https://www.youtube.com/playlist?list=PLSE8ODhjZXjYa_zX-KeMJui7pcN1rIaIJ" target="_blank">15-721 Spring 2024</a>.
+    All videos © CMU Database Group, used as publicly shared course material.
+  </p>
+
+  <h2><span class="no">02</span>Weekly Watching Schedule</h2>
+  <div class="tblwrap">
+  <table>
+    <tr><th>Wk</th><th>Topic</th><th>Watch Before Class</th></tr>
+
+    <tr class="part"><td colspan="3">Part I — Why data systems?</td></tr>
+    <tr>
+      <td class="wk">01</td><td class="topic">Intro, the world of data systems</td>
+      <td>
+        <div class="vid"><span class="tag none">None</span>First week — no pre-watching required.</div>
+        <div class="vid"><span class="tag opt">Optional</span><a href="https://www.youtube.com/watch?v=5J-I8Mj8tss" target="_blank">15-721 #01 · Modern Analytical Database Systems</a></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="wk">02</td><td class="topic">The relational model &amp; SQL</td>
+      <td>
+        <div class="vid"><span class="tag core">Core</span><a href="https://www.youtube.com/watch?v=7NPIENPr-zk" target="_blank">15-445 #01 · Relational Model &amp; Algebra</a></div>
+        <div class="vid"><span class="tag core">Core</span><a href="https://www.youtube.com/watch?v=O5gU9NQjCAs" target="_blank">15-445 #02 · Modern SQL</a></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="wk">03</td><td class="topic">How data lives on disk &amp; the memory wall</td>
+      <td>
+        <div class="vid"><span class="tag core">Core</span><a href="https://www.youtube.com/watch?v=PRLXdIMJhOg" target="_blank">15-445 #03 · Database Storage I</a></div>
+        <div class="vid"><span class="tag core">Core</span><a href="https://www.youtube.com/watch?v=8-2yv4z0VZc" target="_blank">15-445 #04 · Memory Management (Buffer Pool)</a></div>
+        <div class="vid"><span class="tag opt">Optional</span><a href="https://www.youtube.com/watch?v=2_sTdS4h-bY" target="_blank">15-445 #05 · Database Storage II</a></div>
+      </td>
+    </tr>
+
+    <tr class="part"><td colspan="3">Part II — Running a simple plan</td></tr>
+    <tr>
+      <td class="wk">04</td><td class="topic">From SQL to a plan</td>
+      <td>
+        <div class="vid"><span class="tag core">Core</span><a href="https://www.youtube.com/watch?v=E-UUd6cB57w" target="_blank">15-445 #13 · Query Execution I (iterator model, pipelining)</a></div>
+        <div class="vid"><span class="tag opt">Optional</span><a href="https://www.youtube.com/watch?v=Kzf1hGjtZOU" target="_blank">15-445 #14 · Query Execution II (parallelism)</a></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="wk">05</td><td class="topic">Physical operators</td>
+      <td>
+        <div class="vid"><span class="tag core">Core</span><a href="https://www.youtube.com/watch?v=LzyKTpeIgts" target="_blank">15-445 #11 · Sorting &amp; Aggregation Algorithms</a></div>
+        <div class="vid"><span class="tag core">Core</span><a href="https://www.youtube.com/watch?v=YIdIaPopfpk" target="_blank">15-445 #12 · Join Algorithms</a></div>
+        <div class="vid"><span class="tag opt">Optional</span><a href="https://www.youtube.com/watch?v=S40K8iGa8Ek" target="_blank">15-721 #09 · Hash Join Algorithms</a></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="wk">06</td><td class="topic">Indexes: paying storage to skip work</td>
+      <td>
+        <div class="vid"><span class="tag core">Core</span><a href="https://www.youtube.com/watch?v=nuNW8IfgPNU" target="_blank">15-445 #07 · Hash Tables</a></div>
+        <div class="vid"><span class="tag core">Core</span><a href="https://www.youtube.com/watch?v=u7ii_Lvm9rM" target="_blank">15-445 #08 · Indexes &amp; Filters I (B+-trees)</a></div>
+        <div class="vid"><span class="tag opt">Optional</span><a href="https://www.youtube.com/watch?v=PjST2n7abAY" target="_blank">15-445 #09 · Indexes &amp; Filters II (LSM, Bloom filters)</a></div>
+      </td>
+    </tr>
+
+    <tr class="part"><td colspan="3">Part III — Choosing (and fixing) plans</td></tr>
+    <tr>
+      <td class="wk">07</td><td class="topic">Plan equivalence &amp; cost-based optimization</td>
+      <td>
+        <div class="vid"><span class="tag core">Core</span><a href="https://www.youtube.com/watch?v=b53huOGcsZ8" target="_blank">15-445 #15 · Query Planning &amp; Optimization I</a></div>
+        <div class="vid"><span class="tag opt">Optional</span><a href="https://www.youtube.com/watch?v=DwX0X8CyBSg" target="_blank">15-721 #13 · Optimizer Implementation I</a></div>
+        <div class="vid"><span class="tag opt">Optional</span><a href="https://www.youtube.com/watch?v=B9gJa5ZLg8s" target="_blank">15-721 #14 · Optimizer Implementation II (Cascades)</a></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="wk">08</td><td class="topic">Project proposal presentations</td>
+      <td><div class="vid"><span class="tag none">None</span>In class — presentation week.</div></td>
+    </tr>
+    <tr>
+      <td class="wk">09</td><td class="topic">Cost models &amp; cardinality estimation</td>
+      <td>
+        <div class="vid"><span class="tag core">Core</span><a href="https://www.youtube.com/watch?v=azTHRpzl10o" target="_blank">15-445 #16 · Query Planning &amp; Optimization II (statistics, costing)</a></div>
+        <div class="vid"><span class="tag opt">Optional</span><a href="https://www.youtube.com/watch?v=anVC4AJeXqw" target="_blank">15-721 #15 · Optimizer Implementation III</a></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="wk">10</td><td class="topic">When plans go wrong — or take too long</td>
+      <td><div class="vid"><span class="tag none">None</span>Instructor lecture — adaptive &amp; approximate query processing (covered from research papers; no matching CMU lecture).</div></td>
+    </tr>
+
+    <tr class="part"><td colspan="3">Part IV — Modern analytics engines</td></tr>
+    <tr>
+      <td class="wk">11</td><td class="topic">Precomputation: materialized views</td>
+      <td><div class="vid"><span class="tag none">None</span>Instructor lecture — view selection &amp; incremental maintenance (covered from research papers).</div></td>
+    </tr>
+    <tr>
+      <td class="wk">12</td><td class="topic">Columnar engines, open formats &amp; the cloud</td>
+      <td>
+        <div class="vid"><span class="tag core">Core</span><a href="https://www.youtube.com/watch?v=yWnToWrskXE" target="_blank">15-445 #06 · Storage Models &amp; Compression</a></div>
+        <div class="vid"><span class="tag core">Core</span><a href="https://www.youtube.com/watch?v=yU1S8gwjGEw" target="_blank">15-721 #06 · Vectorized Query Execution</a></div>
+        <div class="vid"><span class="tag opt">Optional</span><a href="https://www.youtube.com/watch?v=1hdynBJo3ew" target="_blank">15-721 #02 · Data Formats &amp; Encoding I (Parquet et al.)</a></div>
+        <div class="vid"><span class="tag opt">Optional</span><a href="https://www.youtube.com/watch?v=4iD4h4sGLz4" target="_blank">15-721 #20 · System Analysis: DuckDB</a></div>
+        <div class="vid"><span class="tag opt">Optional</span><a href="https://www.youtube.com/watch?v=NhWp1bTG0Cw" target="_blank">15-721 #19 · System Analysis: Snowflake</a></div>
+      </td>
+    </tr>
+
+    <tr class="part"><td colspan="3">Part V — When data changes &amp; environments change</td></tr>
+    <tr>
+      <td class="wk">13</td><td class="topic">OLTP: transactions &amp; recovery</td>
+      <td>
+        <div class="vid"><span class="tag core">Core</span><a href="https://www.youtube.com/watch?v=tMFAgvDViAI" target="_blank">15-445 #17 · Concurrency Control Theory</a></div>
+        <div class="vid"><span class="tag core">Core</span><a href="https://www.youtube.com/watch?v=tUFha9-DuSk" target="_blank">15-445 #20 · Multi-Version Concurrency Control</a></div>
+        <div class="vid"><span class="tag core">Core</span><a href="https://www.youtube.com/watch?v=X2jc4qalNy0" target="_blank">15-445 #22 · Database Recovery (ARIES)</a></div>
+        <div class="vid"><span class="tag opt">Optional</span><a href="https://www.youtube.com/watch?v=drStlhNbfHI" target="_blank">15-445 #18 · Two-Phase Locking</a></div>
+        <div class="vid"><span class="tag opt">Optional</span><a href="https://www.youtube.com/watch?v=CedEy54pe3g" target="_blank">15-445 #21 · Database Logging</a></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="wk">14</td><td class="topic">Parallel, distributed, cloud-native, GPU</td>
+      <td>
+        <div class="vid"><span class="tag core">Core</span><a href="https://www.youtube.com/watch?v=IFLQBWY6dlE" target="_blank">15-445 #23 · Distributed Database Systems I</a></div>
+        <div class="vid"><span class="tag opt">Optional</span><a href="https://www.youtube.com/watch?v=pQh5fka3FC0" target="_blank">15-445 #24 · Distributed Database Systems II</a></div>
+        <div class="vid"><span class="tag opt">Optional</span><a href="https://www.youtube.com/watch?v=VZjzKVfU46k" target="_blank">15-721 #08 · Scheduling &amp; Coordination</a></div>
+      </td>
+    </tr>
+
+    <tr class="part"><td colspan="3">Part VI — Databases meet AI</td></tr>
+    <tr>
+      <td class="wk">15</td><td class="topic">The AI frontier</td>
+      <td><div class="vid"><span class="tag none">None</span>Instructor lecture — NL2SQL, learned components, semantic operators, vector search: the research frontier, covered in class with current papers.</div></td>
+    </tr>
+    <tr>
+      <td class="wk">16</td><td class="topic">Final project presentations</td>
+      <td><div class="vid"><span class="tag none">None</span>In class — presentation week.</div></td>
+    </tr>
+  </table>
+  </div>
+
+  <h2><span class="no">03</span>Notes</h2>
+  <ul class="compact">
+    <li><strong>Grading is unchanged.</strong> Everything in the <a href="cs50600-syllabus.html">syllabus</a> — Project 60% / Review 10% / Quiz 30% — stays exactly as announced. This guide only describes how lecture content is delivered.</li>
+    <li><strong>Quiz scope.</strong> Each quiz covers in-class material plus the <span class="tag core">Core</span> videos assigned up to that point.</li>
+    <li><strong>Videos are graduate-friendly but not graduate-level everywhere.</strong> 15-445 lectures build the foundation; in-class sessions push into the research depth expected of a graduate course. If a video feels easy, come to class with questions about what it left out.</li>
+    <li><strong>Mismatch weeks (10, 11, 15)</strong> have no suitable public lecture — these are covered entirely in class and lean on the recommended papers.</li>
+  </ul>
+
+</div>
+</body>
+</html>

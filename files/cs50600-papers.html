@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CS.50600 Database Systems — Paper Review Candidates</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0c0c0c; --soft: #4a4a4a; --faint: #8b8b8b;
+    --line: #dcdcd8; --dark: #b8b8b2; --accent: #004191; --accent-soft: #e9f0f9;
+  }
+  @page { size: A4; margin: 16mm 14mm; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #fff; }
+  body {
+    font-family: 'Inter', sans-serif; font-size: 9.5pt; color: var(--ink);
+    line-height: 1.5; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .page { padding: 0 4mm; }
+  .mono { font-family: 'Inter', sans-serif; }
+
+  /* header */
+  .head { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2.5px solid var(--ink); padding-bottom: 12px; }
+  .brand { font-weight: 800; font-size: 15pt; letter-spacing: -0.02em; }
+  .brand span { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 7.5pt; color: var(--faint); margin-left: 8px; letter-spacing: .02em; }
+  .head-right { font-family: 'Inter', sans-serif; font-size: 7.5pt; color: var(--soft); text-align: right; line-height: 1.6; }
+
+  .course { margin-top: 12px; }
+  .overline { font-family: 'Inter', sans-serif; font-size: 8pt; letter-spacing: .15em; text-transform: uppercase; color: var(--accent); }
+  h1 { font-size: 20pt; font-weight: 800; letter-spacing: -0.025em; margin-top: 6px; }
+  .subtitle { color: var(--soft); margin-top: 4px; font-size: 10pt; }
+
+  /* info grid */
+  .info { display: grid; grid-template-columns: 1fr 1fr 1fr; border: 1px solid var(--ink); margin-top: 16px; }
+  .info div { padding: 5px 12px; border-right: 1px solid var(--line); }
+  .info div:nth-child(3n) { border-right: none; }
+  .info div:nth-child(n+4) { border-top: 1px solid var(--line); }
+  .info b { display: block; font-family: 'Inter', sans-serif; font-weight: 500; font-size: 6.8pt; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); margin-bottom: 2px; }
+  .info span { font-size: 9pt; font-weight: 500; }
+
+  h2 { font-size: 11.5pt; font-weight: 700; letter-spacing: -0.01em; margin: 12px 0 6px; padding-top: 9px; border-top: 1px solid var(--dark); }
+  h2 .no { font-family: 'Inter', sans-serif; font-size: 8pt; color: var(--accent); font-weight: 500; margin-right: 8px; }
+  p { color: var(--soft); margin-bottom: 7px; }
+  p strong { color: var(--ink); }
+
+  ul.compact { margin: 4px 0 4px 0; list-style: none; }
+  ul.compact li { color: var(--soft); padding-left: 14px; position: relative; margin-bottom: 2px; }
+  ul.compact li::before { content: "–"; position: absolute; left: 0; color: var(--accent); }
+  ul.compact li strong { color: var(--ink); }
+
+  /* schedule table */
+  table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+  th { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 6.8pt; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); text-align: left; padding: 5px 10px; border-bottom: 1.5px solid var(--ink); }
+  td { padding: 4.5px 10px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 8.6pt; }
+  td.wk { font-family: 'Inter', sans-serif; font-size: 8pt; color: var(--accent); white-space: nowrap; width: 34px; }
+  td.topic { font-weight: 600; width: 34%; }
+  td.detail { color: var(--soft); }
+  tr.part td { background: var(--accent-soft); font-family: 'Inter', sans-serif; font-size: 7pt; letter-spacing: .13em; text-transform: uppercase; color: var(--accent); font-weight: 500; padding: 4px 10px; border-bottom: 1px solid var(--line); }
+  tr.exam td.topic, tr.exam td.detail { color: var(--ink); }
+  tr.exam td { background: #f6f6f3; }
+  span.nc { font-family: 'Inter', sans-serif; font-size: 7pt; color: var(--accent); white-space: nowrap; }
+
+  /* grading bar */
+  .gbar { display: flex; height: 20px; border: 1px solid var(--ink); margin: 8px 0 5px; }
+  .gbar div { display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 6.8pt; letter-spacing: .04em; color: #fff; white-space: nowrap; overflow: hidden; }
+  .glegend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 6px; }
+  .glegend span { font-size: 8.3pt; color: var(--soft); }
+  .glegend b { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 8pt; color: var(--ink); }
+
+  .note { border: 1px solid var(--dark); background: #fafaf7; padding: 10px 14px; margin-top: 10px; font-size: 8.6pt; color: var(--soft); }
+  .note b { color: var(--ink); }
+
+  .foot { margin-top: 4px; padding-top: 5px; border-top: 1px solid var(--dark); display: flex; justify-content: space-between; font-family: 'Inter', sans-serif; font-size: 7pt; color: var(--faint); }
+
+  .pagebreak { break-before: page; }
+  h2, tr { break-inside: avoid; }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-soft); }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="course">
+    <h1>Candidate Papers</h1>
+  </div>
+
+  <table>
+    <tr><th style="width:30px">#</th><th style="width:30%">Paper</th><th>Authors</th><th>Venue</th></tr>
+    <tr><td class="wk">01</td><td class="topic"><a href="https://ieeexplore.ieee.org/document/10184818" target="_blank">SPA: Economical and Workload-Driven Indexing for Data Analytics in the Cloud</a></td><td class="detail">Peter Boncz, Yannis Chronis, Jan Finis, Stefan Halfpap, Viktor Leis, Thomas Neumann, Anisoara Nica, Caetano Sauer, Knut Stolze, Marcin Zukowski</td><td class="detail" style="white-space:nowrap">ICDE 2023</td></tr>
+    <tr><td class="wk">02</td><td class="topic"><a href="https://dl.acm.org/doi/10.14778/3750601.3750632" target="_blank">Workload Insights from the Snowflake Data Cloud: What Do Production Analytic Queries Really Look Like?</a></td><td class="detail">Jan Vincent Szlang, Sebastian Bre&szlig;, Sebastian Cattes, Jonathan Dees, Florian Funke, Max Heimel, Michel Oleynik, Ismail Oukid, Tobias Maltenberger</td><td class="detail" style="white-space:nowrap">PVLDB 2025</td></tr>
+    <tr><td class="wk">03</td><td class="topic"><a href="https://www.vldb.org/cidrdb/papers/2026/p29-zhao.pdf" target="_blank">I Can&rsquo;t Believe It&rsquo;s Not Yannakakis: Pragmatic Bitmap Filters in Microsoft SQL Server</a></td><td class="detail">Hangdong Zhao, Yuanyuan Tian, Rana Alotaibi, Bailu Ding, Nicolas Bruno, Jes&uacute;s Camacho-Rodr&iacute;guez, Vassilis Papadimos, Ernesto Cervantes Ju&aacute;rez, Cesar Galindo-Legaria, Carlo Curino</td><td class="detail" style="white-space:nowrap">CIDR 2026</td></tr>
+    <tr><td class="wk">04</td><td class="topic"><a href="https://dl.acm.org/doi/10.1145/3722212.3724447" target="_blank">Pruning in Snowflake: Working Smarter, Not Harder</a></td><td class="detail">Andreas Zimmerer, Damien Dam, Jan Kossmann, Juliane Waack, Ismail Oukid, Andreas Kipf</td><td class="detail" style="white-space:nowrap">SIGMOD 2025</td></tr>
+    <tr><td class="wk">05</td><td class="topic"><a href="https://dl.acm.org/doi/10.14778/3681954.3681995" target="_blank">Robust Join Processing with Diamond Hardened Joins</a></td><td class="detail">Altan Birler, Alfons Kemper, Thomas Neumann</td><td class="detail" style="white-space:nowrap">PVLDB 2024</td></tr>
+    <tr><td class="wk">06</td><td class="topic"><a href="https://dl.acm.org/doi/10.1145/3639301" target="_blank">PLAQUE: Automated Predicate Learning at Query Time</a></td><td class="detail">Yiming Lin, Sharad Mehrotra</td><td class="detail" style="white-space:nowrap">SIGMOD 2024</td></tr>
+    <tr><td class="wk">07</td><td class="topic"><a href="https://dl.acm.org/doi/10.14778/3303753.3303760" target="_blank">HetExchange: Encapsulating Heterogeneous CPU-GPU Parallelism in JIT Compiled Engines</a></td><td class="detail">Periklis Chrysogelos, Manos Karpathiotakis, Raja Appuswamy, Anastasia Ailamaki</td><td class="detail" style="white-space:nowrap">PVLDB 2019</td></tr>
+    <tr><td class="wk">08</td><td class="topic"><a href="https://dl.acm.org/doi/10.14778/3705829.3705856" target="_blank">Themis: A GPU-Accelerated Relational Query Execution Engine</a></td><td class="detail">Kijae Hong, Kyoungmin Kim, Young-Koo Lee, Yang-Sae Moon, Sourav S. Bhowmick, Wook-Shin Han</td><td class="detail" style="white-space:nowrap">PVLDB 2025</td></tr>
+    <tr><td class="wk">09</td><td class="topic"><a href="https://dl.acm.org/doi/10.1145/1066157.1066201" target="_blank">QPipe: A Simultaneously Pipelined Relational Query Engine</a></td><td class="detail">Stavros Harizopoulos, Vladislav Shkapenyuk, Anastassia Ailamaki</td><td class="detail" style="white-space:nowrap">SIGMOD 2005</td></tr>
+    <tr><td class="wk">10</td><td class="topic"><a href="https://dl.acm.org/doi/10.14778/3476249.3476265" target="_blank">FlexPushdownDB: Hybrid Pushdown and Caching in a Cloud DBMS</a></td><td class="detail">Yifei Yang, Matt Youill, Matthew Woicik, Yizhou Liu, Xiangyao Yu, Marco Serafini, Ashraf Aboulnaga, Michael Stonebraker</td><td class="detail" style="white-space:nowrap">PVLDB 2021</td></tr>
+    <tr><td class="wk">11</td><td class="topic"><a href="https://dl.acm.org/doi/10.1145/564691.564722" target="_blank">Exploiting Statistics on Query Expressions for Optimization</a></td><td class="detail">Nicolas Bruno, Surajit Chaudhuri</td><td class="detail" style="white-space:nowrap">SIGMOD 2002</td></tr>
+    <tr><td class="wk">12</td><td class="topic"><a href="https://dl.acm.org/doi/10.1145/3685980.3685984" target="_blank">What Goes Around Comes Around&hellip; And Around&hellip;</a></td><td class="detail">Michael Stonebraker, Andrew Pavlo</td><td class="detail" style="white-space:nowrap">SIGMOD Record 2024</td></tr>
+    <tr><td class="wk">13</td><td class="topic"><a href="https://arxiv.org/abs/2603.02001" target="_blank">Bespoke OLAP: Synthesizing Workload-Specific One-size-fits-one Database Engines</a></td><td class="detail">Johannes Wehrstein, Timo Eckmann, Matthias Jasny, Carsten Binnig</td><td class="detail" style="white-space:nowrap">arXiv 2026 (VLDB 2026)</td></tr>
+    <tr><td class="wk">14</td><td class="topic"><a href="https://dl.acm.org/doi/10.1145/3589295" target="_blank">Free Join: Unifying Worst-Case Optimal and Traditional Joins</a></td><td class="detail">Yisu Remy Wang, Max Willsey, Dan Suciu</td><td class="detail" style="white-space:nowrap">SIGMOD 2023</td></tr>
+    <tr><td class="wk">15</td><td class="topic"><a href="https://dl.gi.de/handle/20.500.12116/2418" target="_blank">Unnesting Arbitrary Queries</a></td><td class="detail">Thomas Neumann, Alfons Kemper</td><td class="detail" style="white-space:nowrap">BTW 2015</td></tr>
+    <tr><td class="wk">16</td><td class="topic"><a href="https://dl.acm.org/doi/10.1145/3183713.3196909" target="_blank">The Case for Learned Index Structures</a></td><td class="detail">Tim Kraska, Alex Beutel, Ed H. Chi, Jeffrey Dean, Neoklis Polyzotis</td><td class="detail" style="white-space:nowrap">SIGMOD 2018</td></tr>
+    <tr><td class="wk">17</td><td class="topic"><a href="https://dl.acm.org/doi/10.1145/3448016.3452838" target="_blank">Bao: Making Learned Query Optimization Practical</a></td><td class="detail">Ryan Marcus, Parimarjan Negi, Hongzi Mao, Nesime Tatbul, Mohammad Alizadeh, Tim Kraska</td><td class="detail" style="white-space:nowrap">SIGMOD 2021</td></tr>
+    <tr><td class="wk">18</td><td class="topic"><a href="https://dl.acm.org/doi/10.14778/2850583.2850594" target="_blank">How Good Are Query Optimizers, Really?</a></td><td class="detail">Viktor Leis, Andrey Gubichev, Atanas Mirchev, Peter Boncz, Alfons Kemper, Thomas Neumann</td><td class="detail" style="white-space:nowrap">PVLDB 2015</td></tr>
+    <tr><td class="wk">19</td><td class="topic"><a href="https://dl.acm.org/doi/10.1145/3514221.3526054" target="_blank">Photon: A Fast Query Engine for Lakehouse Systems</a></td><td class="detail">Alexander Behm, Shoumik Palkar, Utkarsh Agarwal, Tim Armstrong, David Cashman, Ankur Dave, Todd Greenstein, Shant Hovsepian, Ryan Johnson, Arvind Sai Krishnan, Paul Leventis, Ala Luszczak, Prashanth Menon, Mostafa Mokhtar, Gene Pang, Sameer Paranjpye, Greg Rahn, Bart Samwel, Tom van Bussel, Herman van Hovell, Maryann Xue, Reynold Xin, Matei Zaharia</td><td class="detail" style="white-space:nowrap">SIGMOD 2022</td></tr>
+    <tr><td class="wk">20</td><td class="topic"><a href="https://dl.acm.org/doi/10.14778/2735508.2735511" target="_blank">Staring into the Abyss: An Evaluation of Concurrency Control with One Thousand Cores</a></td><td class="detail">Xiangyao Yu, George Bezerra, Andrew Pavlo, Srinivas Devadas, Michael Stonebraker</td><td class="detail" style="white-space:nowrap">PVLDB 2014</td></tr>
+    <tr><td class="wk">21</td><td class="topic"><a href="https://dl.acm.org/doi/10.1145/3575693.3578835" target="_blank">Pond: CXL-Based Memory Pooling Systems for Cloud Platforms</a></td><td class="detail">Huaicheng Li, Daniel S. Berger, Lisa Hsu, Daniel Ernst, Pantea Zardoshti, Stanko Novakovic, Monish Shah, Samir Rajadnya, Scott Lee, Ishwar Agarwal, Mark D. Hill, Marcus Fontoura, Ricardo Bianchini</td><td class="detail" style="white-space:nowrap">ASPLOS 2023</td></tr>
+    <tr><td class="wk">22</td><td class="topic"><a href="https://dl.acm.org/doi/10.14778/3303753.3303754" target="_blank">Fast Approximate Nearest Neighbor Search with the Navigating Spreading-out Graph (NSG)</a></td><td class="detail">Cong Fu, Chao Xiang, Changxu Wang, Deng Cai</td><td class="detail" style="white-space:nowrap">PVLDB 2019</td></tr>
+    <tr><td class="wk">23</td><td class="topic"><a href="https://dl.acm.org/doi/10.14778/3476249.3476255" target="_blank">A Comprehensive Survey and Experimental Comparison of Graph-Based Approximate Nearest Neighbor Search</a></td><td class="detail">Mengzhao Wang, Xiaoliang Xu, Qiang Yue, Yuxiang Wang</td><td class="detail" style="white-space:nowrap">PVLDB 2021</td></tr>
+    <tr><td class="wk">24</td><td class="topic"><a href="https://dl.acm.org/doi/10.14778/3749646.3749685" target="_blank">Semantic Operators and Their Optimization: Enabling LLM-Based Data Processing with Accuracy Guarantees in LOTUS</a></td><td class="detail">Liana Patel, Siddharth Jha, Melissa Pan, Harshit Gupta, Parth Asawa, Carlos Guestrin, Matei Zaharia</td><td class="detail" style="white-space:nowrap">PVLDB 2025</td></tr>
+  </table>
+
+  <div class="foot">
+    <span>CS.50600 Database Systems &middot; Fall 2026 &middot; Kyoungmin Kim</span>
+    <span><a href="cs50600-syllabus.html">Syllabus</a></span>
+  </div>
+</div>
+</body>
+</html>

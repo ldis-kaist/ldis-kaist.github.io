@@ -17,7 +17,7 @@
    ========================================================== */
 const SITE = {
   ABBR: "LDIS",
-  NAME: "Lab of Data-Intensive Systems",
+  NAME: "Lab of Data & AI-Intensive Systems",
   SCHOOL: "School of Computing",
   INSTITUTION: "KAIST",
   CONTACT_EMAIL: "kyoung-min.kim@epfl.ch",
