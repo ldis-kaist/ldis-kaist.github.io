@@ -20,7 +20,7 @@ const SITE = {
   NAME: "Lab of Data & AI-Intensive Systems",
   SCHOOL: "School of Computing",
   INSTITUTION: "KAIST",
-  CONTACT_EMAIL: "kyoung-min.kim@epfl.ch",
+  CONTACT_EMAIL: "kymkim@kaist.ac.kr",
   YEAR: "2026",
 };
 
