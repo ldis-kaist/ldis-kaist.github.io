@@ -13,8 +13,41 @@
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title></title>
-<meta name="description" content="">
+<title>LDIS — Lab of Data & AI-Intensive Systems, KAIST (김경민 교수 연구실)</title>
+<meta name="description" content="LDIS (Lab of Data & AI-Intensive Systems), Prof. Kyoungmin Kim, School of Computing, KAIST. Research on database systems, AI for databases, and databases for AI. KAIST 전산학부 김경민 교수 연구실 — 데이터베이스·AI 시스템 연구, 대학원생 및 학부 인턴 모집.">
+<link rel="canonical" href="https://ldis.kaist.ac.kr/">
+<meta property="og:title" content="LDIS — Lab of Data & AI-Intensive Systems, KAIST (김경민 교수 연구실)">
+<meta property="og:description" content="LDIS (Lab of Data & AI-Intensive Systems), Prof. Kyoungmin Kim, School of Computing, KAIST. Research on database systems, AI for databases, and databases for AI. KAIST 전산학부 김경민 교수 연구실 — 데이터베이스·AI 시스템 연구, 대학원생 및 학부 인턴 모집.">
+<meta property="og:url" content="https://ldis.kaist.ac.kr/">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ResearchOrganization",
+      "@id": "https://ldis.kaist.ac.kr/#org",
+      "name": "LDIS — Lab of Data & AI-Intensive Systems",
+      "alternateName": ["LDIS", "김경민 교수 연구실", "KAIST 전산학부 김경민 연구실"],
+      "url": "https://ldis.kaist.ac.kr/",
+      "parentOrganization": { "@type": "CollegeOrUniversity", "name": "KAIST", "department": "School of Computing" },
+      "address": { "@type": "PostalAddress", "addressLocality": "Daejeon", "addressCountry": "KR" },
+      "founder": { "@id": "https://ldis.kaist.ac.kr/#kmkim" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://ldis.kaist.ac.kr/#kmkim",
+      "name": "Kyoungmin Kim",
+      "alternateName": "김경민",
+      "jobTitle": "Assistant Professor",
+      "worksFor": { "@id": "https://ldis.kaist.ac.kr/#org" },
+      "affiliation": { "@type": "CollegeOrUniversity", "name": "KAIST" },
+      "email": "kymkim@kaist.ac.kr",
+      "url": "https://ldis.kaist.ac.kr/team.html"
+    }
+  ]
+}
+</script>
 <link rel="icon" type="image/svg+xml" href="files/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -72,6 +105,9 @@
         <strong>adaptive</strong>, learning from execution rather than predetermining everything;
         and <strong>declarative</strong>, so users say <em>what</em> they want, not <em>how</em> to get it.
         As a long-term goal, we aim to <strong>build a reliable AI-driven research assistant</strong> for reducing obvious/manual tasks so we can focus on genuinely interesting problems.
+      </p>
+      <p class="hero-sub" lang="ko" style="font-size:13.5px; color:var(--ink-faint);">
+        KAIST 전산학부 김경민 교수 연구실 (Prof. Kyoungmin Kim, School of Computing, KAIST)
       </p>
       <p class="hero-note">We are recruiting graduate students and undergraduate interns. <a href="#join">Learn more</a></p>
     </div>
@@ -290,8 +326,9 @@
    from the same fields — so the lab's abbreviation, full name, and
    contact email are typed out in exactly one place on the whole site.
    ========================================================== */
-document.title = `${SITE.ABBR} — ${SITE.NAME}, ${SITE.INSTITUTION}`;
-document.querySelector('meta[name="description"]').setAttribute("content",
+/* static <title>/<meta description> in <head> are for crawlers that do not run JS (Naver, Daum); the JS below only fills them if they are empty. */
+if (!document.title) document.title = `${SITE.ABBR} — ${SITE.NAME}, ${SITE.INSTITUTION}`;
+if (!document.querySelector('meta[name="description"]').getAttribute("content")) document.querySelector('meta[name="description"]').setAttribute("content",
   `${SITE.ABBR} is a research group in the ${SITE.SCHOOL} at ${SITE.INSTITUTION}, working on data systems and AI.`);
 applySiteBrand();
 </script>

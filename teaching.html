@@ -3,8 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title></title>
-<meta name="description" content="">
+<title>Teaching — LDIS, KAIST</title>
+<meta name="description" content="Courses taught by Prof. Kyoungmin Kim at KAIST School of Computing.">
+<link rel="canonical" href="https://ldis.kaist.ac.kr/teaching.html">
+<meta property="og:title" content="Teaching — LDIS, KAIST">
+<meta property="og:description" content="Courses taught by Prof. Kyoungmin Kim at KAIST School of Computing.">
+<meta property="og:url" content="https://ldis.kaist.ac.kr/teaching.html">
+<meta property="og:type" content="website">
 <link rel="icon" type="image/svg+xml" href="files/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -62,8 +67,9 @@
 /* ==========================================================
    BRANDING
    ========================================================== */
-document.title = `Teaching — ${SITE.ABBR}, ${SITE.INSTITUTION}`;
-document.querySelector('meta[name="description"]').setAttribute("content",
+/* static <title>/<meta description> in <head> are for crawlers that do not run JS (Naver, Daum); the JS below only fills them if they are empty. */
+if (!document.title) document.title = `Teaching — ${SITE.ABBR}, ${SITE.INSTITUTION}`;
+if (!document.querySelector('meta[name="description"]').getAttribute("content")) document.querySelector('meta[name="description"]').setAttribute("content",
   `Courses taught at the ${SITE.ABBR} (${SITE.NAME}), ${SITE.SCHOOL}, ${SITE.INSTITUTION}.`);
 applySiteBrand();
 </script>

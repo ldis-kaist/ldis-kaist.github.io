@@ -3,8 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title></title>
-<meta name="description" content="">
+<title>Team — LDIS, KAIST (김경민 교수)</title>
+<meta name="description" content="People of LDIS, KAIST School of Computing: Prof. Kyoungmin Kim (김경민 교수) and students.">
+<link rel="canonical" href="https://ldis.kaist.ac.kr/team.html">
+<meta property="og:title" content="Team — LDIS, KAIST (김경민 교수)">
+<meta property="og:description" content="People of LDIS, KAIST School of Computing: Prof. Kyoungmin Kim (김경민 교수) and students.">
+<meta property="og:url" content="https://ldis.kaist.ac.kr/team.html">
+<meta property="og:type" content="website">
 <link rel="icon" type="image/svg+xml" href="files/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,7 +54,7 @@
     <div class="prof">
       <div class="prof-photo"><img src="files/self.jpeg" alt="Kyoungmin Kim" width="104" height="104" style="width:104px;height:104px;object-fit:cover;display:block;"></div>
       <div>
-        <h3>Kyoungmin Kim</h3>
+        <h3>Kyoungmin Kim <span lang="ko" style="font-weight:400;color:var(--ink-faint);font-size:.85em;">(김경민)</span></h3>
         <div class="role">Assistant Professor, School of Computing, KAIST</div>
         <div class="bio">
           <ul class="bio-history">
@@ -85,8 +90,9 @@
 /* ==========================================================
    BRANDING
    ========================================================== */
-document.title = `Team — ${SITE.ABBR}, ${SITE.INSTITUTION}`;
-document.querySelector('meta[name="description"]').setAttribute("content",
+/* static <title>/<meta description> in <head> are for crawlers that do not run JS (Naver, Daum); the JS below only fills them if they are empty. */
+if (!document.title) document.title = `Team — ${SITE.ABBR}, ${SITE.INSTITUTION}`;
+if (!document.querySelector('meta[name="description"]').getAttribute("content")) document.querySelector('meta[name="description"]').setAttribute("content",
   `Team of the ${SITE.ABBR} (${SITE.NAME}), ${SITE.SCHOOL}, ${SITE.INSTITUTION}.`);
 applySiteBrand();
 </script>
