@@ -97,6 +97,18 @@ function parseCSV(text) {
   return rows;
 }
 
+/* Newest first regardless of row order in the CSV. Dates like "Sep 2026",
+   "2026-09", "Sep 12, 2026" all parse; unparseable ones keep their CSV position. */
+function newsTime(d) {
+  const t = Date.parse(/^[A-Za-z]{3,9}\s+\d{4}$/.test(d.trim()) ? "1 " + d.trim() : d);
+  return isNaN(t) ? -Infinity : t;
+}
+function sortNewest(items) {
+  return items.map((it, i) => ({ it, i }))
+    .sort((a, b) => (newsTime(b.it.date) - newsTime(a.it.date)) || (a.i - b.i))
+    .map(x => x.it);
+}
+
 function newsHTML(n) {
   return `<div class="news-item"><span class="news-date">${n.date}</span><p>${n.text}</p></div>`;
 }
@@ -110,8 +122,8 @@ async function loadNews() {
     const rows = parseCSV(await res.text());
     const head = rows[0].map(h => h.trim().toLowerCase());
     const idx = k => head.indexOf(k);
-    const items = rows.slice(1).filter(r => r[idx("date")])
-      .map(r => ({ date: r[idx("date")], text: r[idx("text")] }));
+    const items = sortNewest(rows.slice(1).filter(r => r[idx("date")])
+      .map(r => ({ date: r[idx("date")], text: r[idx("text")] })));
     if (items.length) { el.innerHTML = items.map(newsHTML).join(""); return true; }
     return false;
   } catch (e) { return false; }

@@ -622,7 +622,20 @@ loadSheet();
    on news.html (linked from the nav and from "View all news" below).
    ========================================================== */
 const NEWS_SHEET_URL = "files/news.csv";
-const NEWS_SIDEBAR_COUNT = 5;
+const NEWS_SIDEBAR_COUNT = 3;
+
+/* Newest first regardless of row order in the CSV. Dates like "Sep 2026",
+   "2026-09", "Sep 12, 2026" all parse; unparseable ones keep their CSV position. */
+function newsTime(d) {
+  const t = Date.parse(/^[A-Za-z]{3,9}\s+\d{4}$/.test(d.trim()) ? "1 " + d.trim() : d);
+  return isNaN(t) ? -Infinity : t;
+}
+function sortNewest(items) {
+  return items.map((it, i) => ({ it, i }))
+    .sort((a, b) => (newsTime(b.it.date) - newsTime(a.it.date)) || (a.i - b.i))
+    .map(x => x.it);
+}
+
 
 function newsItemHTML(n) {
   return `<div class="news-item-sm">
@@ -640,8 +653,8 @@ async function loadNewsSidebar() {
     const rows = parseCSV(await res.text());
     const head = rows[0].map(h => h.trim().toLowerCase());
     const idx = k => head.indexOf(k);
-    const items = rows.slice(1).filter(r => r[idx("date")])
-      .map(r => ({ date: r[idx("date")], text: r[idx("text")] }));
+    const items = sortNewest(rows.slice(1).filter(r => r[idx("date")])
+      .map(r => ({ date: r[idx("date")], text: r[idx("text")] })));
     el.innerHTML = items.length
       ? items.slice(0, NEWS_SIDEBAR_COUNT).map(newsItemHTML).join("")
       : `<p class="tp-empty">News are on the way.</p>`;
@@ -710,7 +723,7 @@ loadNewsSidebar();
 <!-- ==========================================================
      RECRUITING POPUP (Sep 2026)
      ----------------------------------------------------------
-     Shown once per visitor (dismissal is remembered for 7 days in
+     Shown once per visitor (dismissal is remembered for 1 day in
      localStorage). Also opens when the page is visited with
      ?recruit=1 (the News entry links here; a #hash would be stripped by the head script). To retire it, delete
      this whole block. Styles are inline so nothing in themes/ changes.
@@ -780,7 +793,7 @@ loadNewsSidebar();
     </p>
     <div class="rp-actions">
       <a class="rp-mail" data-site="join-email" href="#">Email us</a>
-      <label><input type="checkbox" id="rp-hide"> 7일간 다시 보지 않기</label>
+      <label><input type="checkbox" id="rp-hide"> 오늘 하루 보지 않기</label>
     </div>
   </div>
 </div>
@@ -797,7 +810,7 @@ loadNewsSidebar();
   function close() {
     el.classList.remove("open"); document.body.style.overflow = "";
     if (document.getElementById("rp-hide").checked) {
-      try { localStorage.setItem(KEY, String(Date.now() + 7 * 24 * 3600 * 1000)); } catch (e) {}
+      try { localStorage.setItem(KEY, String(Date.now() + 24 * 3600 * 1000)); } catch (e) {}
     }
   }
   document.getElementById("rp-close").addEventListener("click", close);
