@@ -1,4 +1,5 @@
 title,authors,conference,year,tags,highlight,pdf,code,status
+When Plans Change Answers: Formalizing Cost-Accuracy Optimization For Semantic Queries,<u>Kyoungmin Kim</u>,arXiv,2026,DB4AI;Query Optimization;Algorithm;AI;Theory;Model;Analytics Query;Approximate Query,,https://arxiv.org/abs/2610.08089,,ongoing
 "Confining Nondeterminism: AI-Driven Research Systems as DBMSs for Reliable, Non-Wasteful, Transparent, and Collaborative Research [Vision]","<u>Kyoungmin Kim</u>, Anastasia Ailamaki",arXiv,2026,DB4AI,,https://arxiv.org/abs/2607.10508,,ongoing
 Fast LLM-Based Semantic Filtering: From A Unified Framework To An Adaptive Two-Phase Method,"<u>Kyoungmin Kim</u>, Martin Catheland, Elif Sema Balcioglu, Anastasia Ailamaki",arXiv,2026,DB4AI;Query Processing;Algorithm;AI;Theory;Model;Single Operator;Approximate Query,,https://arxiv.org/abs/2606.08090,,ongoing
 Fast Approximate Vector Joins via Offline-Online Co-Design,"<u>Kyoungmin Kim</u>, Lennart Roth, Liang Liang, Anastasia Ailamaki",arXiv,2026,DB4AI;Query Processing;Algorithm;Theory;Vector;Single Operator;Approximate Query,,https://arxiv.org/abs/2603.16360,,ongoing
